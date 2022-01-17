@@ -19,6 +19,8 @@ import { SharedModule } from './shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ParticipantTableComponent } from './components/participant-table/participant-table.component';
 import { ParticipantRingComponent } from './components/participant-ring/participant-ring.component';
+import { PartialsModule } from './partials/partials.module';
+import { VisModule } from './vis/vis.module';
 
 @NgModule({
   declarations: [
@@ -33,6 +35,7 @@ import { ParticipantRingComponent } from './components/participant-ring/particip
   imports: [
     SharedModule,
     LayoutModule,
+    PartialsModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,

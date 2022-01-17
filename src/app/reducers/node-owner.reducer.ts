@@ -7,12 +7,21 @@ export const nodeOwnersFeatureKey = 'nodeOwners';
 
 export interface NodeOwnersState extends EntityState<NodeOwner> {
   // additional entities state properties
+  pub_key: string | null
+
 }
 
-export const adapter: EntityAdapter<NodeOwner> = createEntityAdapter<NodeOwner>();
+export function selectNodeOwner(a: NodeOwner): string {
+  //In this case this would be optional since primary key is id
+  return a.pub_key;
+}
+
+export const adapter: EntityAdapter<NodeOwner> = createEntityAdapter<NodeOwner>({
+  selectId: selectNodeOwner,
+});
 
 export const initialState: NodeOwnersState = adapter.getInitialState({
-  // additional entity state properties
+  pub_key: ''
 });
 
 export const nodeOwnersReducer = createReducer(

@@ -49,9 +49,11 @@ import '@angular/localize/init';
 /***************************************************************************************************
  * Zone JS is required by default for Angular itself.
  */
-import 'zone.js';  // Included with Angular CLI.
-
+import 'zone.js'; // Included with Angular CLI.
 
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */
+
+// Required for Dragula: https://github.com/valor-software/ng2-dragula#1-important-add-the-following-line-to-your-polyfillsts
+(window as any).global = window;

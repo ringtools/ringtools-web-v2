@@ -18,7 +18,7 @@ import * as fromRoot from '../../reducers';
   templateUrl: './overview.component.html',
   styleUrls: ['./overview.component.scss'],
 })
-export class OverviewComponent implements OnInit, OnDestroy {
+export class OverviewComponent implements OnDestroy {
   viewMode!: string;
   nodeOwners$!: Observable<NodeOwner[]>;
   settings$!: Observable<SettingState>;
@@ -52,8 +52,6 @@ export class OverviewComponent implements OnInit, OnDestroy {
       this.refreshRing();
     });
   }
-
-  ngOnInit(): void {}
 
   ngOnDestroy(): void {
     this.lnData.channelSocket.emit('unsubscribe_all');
