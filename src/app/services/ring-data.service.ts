@@ -14,7 +14,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { selectNodeOwners } from '../selectors/node-owner.selectors';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class RingDataService {
   nodeOwners$!: Observable<NodeOwner[]>;
@@ -22,17 +22,18 @@ export class RingDataService {
 
   private actionSource = new BehaviorSubject('default message');
   currentAction = this.actionSource.asObservable();
-  
+
   constructor(
     private store: Store<fromRoot.State>,
     private lnData: LnDataService
-  ) { 
+  ) {
     this.nodeOwners$ = this.store.select(selectNodeOwners);
 
     this.nodeOwners$.subscribe((nodeOwners: NodeOwner[]) => {
-      this.nodeOwners = nodeOwners.map(no => Object.assign(new NodeOwner, no));
+      this.nodeOwners = nodeOwners.map((no) =>
+        Object.assign(new NodeOwner(), no)
+      );
     });
-
   }
 
   loadSettings(item: RingSetting) {
@@ -45,7 +46,7 @@ export class RingDataService {
   }
 
   setNodeOwners(nodeOwners: any) {
-    this.store.dispatch(loadNodeOwners({ nodeOwners: nodeOwners }))
+    this.store.dispatch(loadNodeOwners({ nodeOwners: nodeOwners }));
   }
 
   addNodeOwner(pubKey: string, tgUsername: string) {
@@ -55,25 +56,33 @@ export class RingDataService {
         nodename: nodeInfo.node.alias,
         first_name: tgUsername,
         username: tgUsername,
-        username_or_name: ''
+        username_or_name: '',
       };
 
-      this.store.dispatch(addNodeOwner({nodeOwner: no }));
-    })
+      this.store.dispatch(addNodeOwner({ nodeOwner: no }));
+    });
   }
 
   async getRing(): Promise<IRing> {
     let ring: IRing = [];
     for (const [i, node] of this.nodeOwners.entries()) {
       let nextIndex = (i + 1) % this.nodeOwners.length;
-      const nodeInfo = Object.assign(new NodeInfo, (await this.lnData.getNodeInfoAsync(this.nodeOwners[i].pub_key)));
+      const nodeInfo = Object.assign(
+        new NodeInfo(),
+        await this.lnData.getNodeInfoAsync(this.nodeOwners[i].pub_key)
+      );
       let channel = nodeInfo.hasChannelWith(this.nodeOwners[nextIndex].pub_key);
 
       ring.push([
         Object.assign(new NodeOwner(), this.nodeOwners[i]),
         Object.assign(new NodeOwner(), this.nodeOwners[nextIndex]),
         channel,
-        channel ? nodeInfo.getChannelPolicies(this.nodeOwners[nextIndex].pub_key, channel) : undefined
+        channel
+          ? nodeInfo.getChannelPolicies(
+              this.nodeOwners[nextIndex].pub_key,
+              channel
+            )
+          : undefined,
       ]);
     }
 

@@ -26,13 +26,13 @@ import { NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
   ],
   providers: [JsonPipe],
   imports: [
+    CommonModule,
     NgbPopoverModule,
     HttpClientModule,
     VisModule,
     FormsModule,
     SharedModule,
     DragulaModule.forRoot(),
-    CommonModule
   ],
   exports: [
     ParticipantRingComponent,
