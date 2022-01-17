@@ -1,0 +1,27 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4 chart-container d-inline-block" id="circle">
+            <app-participant-ring class="w-100 h-100 d-flex" [ringName]="settings.ringName"
+                [showLogo]="settings.showLogo" id="rofvisual"></app-participant-ring>
+        </div>
+
+        <div class="col-md-8 participants">
+            <h2>Ring participants
+                <div class="btn-group btn-small small btn-group-toggle" ngbRadioGroup name="names"
+                    [(ngModel)]="viewMode" (ngModelChange)="viewChange($event)">
+                    <label ngbButtonLabel class="btn-primary btn-sm">
+                        <input ngbButton type="radio" value="node"> Nodename
+                    </label>
+                    <label ngbButtonLabel class="btn-primary btn-sm">
+                        <input ngbButton type="radio" value="tg"> TG username
+                    </label>
+                </div>
+            </h2>
+
+            <app-participant-table [participants]="ring"></app-participant-table>
+            <button (click)="downloadAsPng()" class="btn btn-primary">Download Visual</button>
+            &nbsp;
+            <small>Red channels: Fee policy missing</small>
+        </div>
+    </div>
+</div>

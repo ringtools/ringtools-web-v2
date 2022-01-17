@@ -1,0 +1,44 @@
+#pubkeys {
+    font-family: monospace;
+    font-size: 0.85em;
+    background: #000;
+    color: green;
+    height: 300px;
+}
+
+.service-icon {
+    width: 16px;
+    height: 16px;
+}
+
+.no-padding {
+    padding: 2px 0;
+}
+
+#pubkey {
+    width: 100%;
+}
+
+.delete-btn {
+    padding: 0.075rem 0.25rem;
+    font-size: 0.625rem;
+}
+
+.list-group-item.small {
+    padding: 0.25rem 0.75rem;
+}
+
+.node_key{
+  max-width: 15vw;
+  white-space: nowrap;
+
+  span, p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+  }
+}
+
+.external-services {
+    width: 50px;
+}

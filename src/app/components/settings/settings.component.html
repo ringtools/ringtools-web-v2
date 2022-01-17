@@ -1,0 +1,122 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12 col-lg-4" >
+            <form>
+                <div class="form-group">
+                    <label for="ringName">Ringname</label>
+                    <input type="text" class="form-control" id="ringName" placeholder="Ring Name" [(ngModel)]="ringName"
+                        name="ringName">
+                    <button (click)="processRingname()" class="btn btn-primary mb-2">Save Ring Name</button>
+                    <button (click)="parseCapacityName()" class="btn btn-secondary mb-2">Parse capacity</button>
+                </div>
+                <div class="form-group">
+                    <label for="ringName">Ring capacity</label>
+                    <input type="number" class="form-control" id="ringName" placeholder="Ring size" [(ngModel)]="ringSize"
+                        name="ringSize">
+                    <button (click)="setRingSize()" class="btn btn-primary mb-2">Save Ring Size</button>
+                </div>
+                <div class="form-group">
+                    <label for="pubkeys">Import groupnodes from 🧀 CheeseRobot ₿ <small>(or use <a href="https://t.me/ringtools_bot" target="_blank">@ringtools_bot</a> command <code>/ringurl</code>)</small></label>
+                    <textarea class="form-control" id="pubkeys" rows="3" [(ngModel)]="pubkeysText"
+                        [ngModelOptions]="{standalone: true}" spellcheck="false"></textarea>
+                    <button (click)="processGroupnodes()" class="btn btn-primary mb-2">Import Groupnodes</button>
+                </div>
+                <!-- <div class="form-group">
+                    <label for="ringName">LND PubSub server</label>
+                    <input type="text" class="form-control" id="pubsubServer" placeholder="PubSub Server" [(ngModel)]="pubsubServer"
+                        [ngModelOptions]="{standalone: true}">
+                    <button (click)="setPubSubServer()" class="btn btn-primary mb-2">Save server</button>
+                </div> -->
+
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="showSrRofLogo" [(ngModel)]="showLogo"
+                    (ngModelChange)="updateShowLogo($event)"
+                    [ngModelOptions]="{standalone: true}">
+                    <label class="form-check-label" for="showSrRofLogo">
+                      Show SR RoF logo
+                    </label>
+                  </div>
+            </form>
+        </div>
+        <div class="col-md-12 col-lg-8">
+            <form>
+                <table class="table table-sm table-striped small">
+                    <thead>
+                        <tr>
+                            <th colspan="2" scope="col" class="external-services"></th>
+                            <th scope="col">Public Key</th>
+                            <th scope="col">Nodename</th>
+                            <th scope="col">TG username</th>
+                            <th scope="col">&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngFor="let item of nodeOwners$ | async">
+                            <tr>
+                                <td class="service-icon amboss">
+                                    <a [attr.href]="'https://amboss.space/node/' +  item.pub_key" target="_blank">
+                                        <img src="/assets/amboss.png" class="service-icon">
+                                    </a>
+                                </td>
+                                <td class="service-icon 1ml">
+                                    <a [attr.href]="get1MlLink(item)" target="_blank">
+                                        <img src="/assets/1ml.png" class="service-icon">
+                                    </a>
+                                </td>
+                                <td scope="row" class="node_key">
+                                    <span>{{ item.pub_key }}</span>
+                                </td>
+                                <td>{{ item.nodename }}</td>
+                                <td>{{ item.username_or_name }}</td>
+                                <td><button class="btn btn-danger btn-small btn-sm delete-btn" (click)="removeNodeOwner(item)">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                                </td>
+                            </tr>
+                        </ng-container>
+
+                        <tr>
+                            <th colspan="2">
+                                Manual add
+                            </th>
+
+                            <th scope="row" class="no-padding" colspan="1">
+                                <div class="form-check">
+                                    <input class="form-check-input position-static" type="text" id="pubkey"
+                                        [(ngModel)]="addPubKey" name="pubKey" placeholder="Public Key">
+                                </div>
+                            </th>
+                            <td>{{ tempNodename }}</td>
+                            <td class="no-padding">
+                                <div class="form-check">
+                                    <input class="form-check-input position-static" type="text" id="TG username"
+                                        [(ngModel)]="addTgUsername" name="tgUserName" placeholder="TG username">
+                                </div>
+                            </td>
+                            <td><button class="btn btn-primary btn-small btn-sm" (click)="addNodeOwner()">Add</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+            <button (click)="saveRingSettings()" class="btn btn-primary mb-2">Save Ring Settings</button>
+            <button (click)="exportJSON()" class="btn btn-secondary mb-2">Copy share URL</button>
+            <p *ngIf="shareUrl"><small>copied to clipboard <a [href]="shareUrl">link</a></small></p>
+            <h3>Saved Rings</h3>
+            <ul class="list-group small">
+                <li class="list-group-item d-flex justify-content-between align-items-center small"
+                    *ngFor="let item of ringSettings$ | async">
+                    <span [innerHTML]="emojiPrefix(item)"></span>
+                    <div class="btn-group btn-small small btn-group-toggle" ngbRadioGroup>
+                        <label ngbButtonLabel class="btn-success btn-sm">
+                            <input ngbButton type="radio" value="node" (click)="loadSettings(item)"> Load
+                        </label>
+                        <label ngbButtonLabel class="btn-danger btn-sm">
+                            <input ngbButton type="radio" value="tg" (click)="removeSettings(item)"> Remove
+                        </label>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

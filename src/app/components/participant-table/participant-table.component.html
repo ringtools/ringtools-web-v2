@@ -1,0 +1,33 @@
+<table class="table table-sm table-striped small">
+    <thead>
+        <tr>
+            <th scope="col">Channel ID</th>
+            <th scope="col">Node 1</th>
+            <th scope="col">Node 2</th>
+            <th scope="col">N1 Base fee</th>
+            <th scope="col">N1 Fee rate</th>
+            <th scope="col">N2 Base fee</th>
+            <th scope="col">N2 Fee rate</th>
+        </tr>
+    </thead>
+    <tbody>
+        <ng-container *ngFor="let item of participants; let i = index">
+            <tr [class.error]="item.channel_id && (!item.initiator_fee || !item.receiver_fee)">
+                <th scope="row" [style.background-color]="getColor(i)" class="channelCol">{{ item[2] }}</th>
+                <ng-template [ngIf]="settings.viewMode === 'tg'" [ngIfElse]="elseBlock">
+                    <td *ngIf="item[0]">{{ item[0].username_or_name }}</td>
+                    <td *ngIf="item[1]">{{ item[1].username_or_name }}</td>
+                </ng-template>
+                <ng-template #elseBlock>
+                    <td *ngIf="item.initiator" class="node_key"><span>{{ item.initiator?.node?.alias }}</span></td>
+                    <td *ngIf="item.receiver" class="node_key"><span>{{ item.receiver?.node?.alias }}</span></td>
+                </ng-template>
+                <td><span *ngIf="item[3]">{{ item[3][0].fee_base_msat }}</span></td>
+                <td><span *ngIf="item[3]">{{ item[3][0].fee_rate_milli_msat }}</span>
+                </td>
+                <td><span *ngIf="item[3]">{{ item[3][1].fee_base_msat }}</span></td>
+                <td><span *ngIf="item[3]">{{ item[3][1].fee_rate_milli_msat }}</span>
+            </tr>
+        </ng-container>
+    </tbody>
+</table>

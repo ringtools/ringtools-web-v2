@@ -1,7 +1,30 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { HomeComponent } from './components/home/home.component';
+import { OverviewComponent } from './components/overview/overview.component';
+import { SettingsComponent } from './components/settings/settings.component';
+import { VisualComponent } from './components/visual/visual.component';
+import { BaseLayoutComponent } from './layout/base/base.component';
 
-const routes: Routes = [];
+const routes: Routes = [
+  {
+    path: '', component: BaseLayoutComponent,
+    children: [
+      {
+        path: '', component: HomeComponent, pathMatch: 'full'
+      },
+      {
+        path: 'settings', component: SettingsComponent
+      },
+      {
+        path: 'overview', component: OverviewComponent
+      },
+      {
+        path: 'visual', component: VisualComponent
+      },
+    ]  
+  },
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
