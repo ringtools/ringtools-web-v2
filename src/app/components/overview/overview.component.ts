@@ -1,9 +1,10 @@
 import { Component, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subscriber, Subscription } from 'rxjs';
 import * as svg from 'save-svg-as-png';
 import { upsertNodeInfo } from 'src/app/actions/node-info.actions';
 import { setViewMode } from 'src/app/actions/setting.actions';
+import { ChannelEdge } from 'src/app/models/channel_edge.model';
 import { NodeInfo } from 'src/app/models/node-info.model';
 import { NodeOwner } from 'src/app/models/node-owner.model';
 import { IRing } from 'src/app/models/ring.model';
@@ -25,10 +26,11 @@ export class OverviewComponent implements OnDestroy {
   settings!: SettingState;
   ring: IRing = [];
   nodeData: Map<string, NodeInfo> = new Map<string, NodeInfo>();
+  sub: Subscription = new Subscription();
 
   constructor(
     private store: Store<fromRoot.State>,
-    private lnData: LnDataService,
+    private lnData: LnDataService
   ) {
     this.nodeOwners$ = this.store.select(selectNodeOwners);
     this.settings$ = this.store.select(selectSettings);
@@ -37,25 +39,55 @@ export class OverviewComponent implements OnDestroy {
       this.settings = settings;
     });
 
-    this.nodeOwners$.subscribe((nodeOwners: NodeOwner[]) => {
-      this.lnData.nodeSocket.emit(
-        'subscribe',
-        nodeOwners.map((no) => no.pub_key)
-      );
+    this.sub.add(
+      this.nodeOwners$.subscribe((nodeOwners: NodeOwner[]) => {
+        this.lnData.nodeSocket.emit(
+          'subscribe',
+          nodeOwners.map((no) => no.pub_key)
+        );
 
-      this.ring = this.makeRing(nodeOwners);
-    });
+        this.ring = this.makeRing(nodeOwners);
+      })
+    );
 
     this.lnData.nodeSocket.on('node', (data: NodeInfo) => {
       this.store.dispatch(upsertNodeInfo({ nodeInfo: data }));
 
       this.nodeData.set(data.node.pub_key, Object.assign(new NodeInfo(), data));
       this.refreshRing();
+
+      const channelIds = this.ring.map((r) => r[2]).filter((r) => r != null);
+
+      if (channelIds.length) {
+        this.lnData.channelSocket.emit('subscribe', channelIds);
+      }
+    });
+
+    this.lnData.channelSocket.on('channel', (data: ChannelEdge) => {
+      let node1 = this.nodeData.get(data.node1_pub)
+      let channelIndex1 = node1?.channels.findIndex(c => c.channel_id == data.channel_id)
+      if (node1 && channelIndex1) {
+        node1.channels = [...node1.channels];
+        node1.channels[channelIndex1] = data;
+        this.nodeData.set(data.node1_pub, node1);
+      }
+
+      let node2 = this.nodeData.get(data.node2_pub)
+      let channelIndex2 = node2?.channels.findIndex(c => c.channel_id == data.channel_id)
+      if (node2 && channelIndex2) {
+        node2.channels = [...node2.channels];
+        node2.channels[channelIndex2] = data;
+        this.nodeData.set(data.node2_pub, node2);
+      }
+
+      this.refreshRing();
     });
   }
 
   ngOnDestroy(): void {
+    this.lnData.nodeSocket.emit('unsubscribe_all');
     this.lnData.channelSocket.emit('unsubscribe_all');
+    this.sub.unsubscribe();
   }
 
   viewChange(event: any) {
