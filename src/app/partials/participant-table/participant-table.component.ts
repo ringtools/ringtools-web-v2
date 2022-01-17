@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Sanitizer } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject } from 'rxjs';
 import { NodeOwner } from 'src/app/models/node-owner.model';
@@ -8,6 +8,14 @@ import { SettingState } from 'src/app/reducers/setting.reducer';
 import { selectSettings } from 'src/app/selectors/setting.selectors';
 import { colorScale } from 'src/app/utils/utils';
 import * as fromRoot from '../../reducers';
+import hljs from 'highlight.js/lib/core';
+import json from 'highlight.js/lib/languages/json';
+import { DomSanitizer } from '@angular/platform-browser';
+import { JsonPipe } from '@angular/common';
+import { RoutingPolicy } from 'src/app/models/routing_policy.model';
+import { NgbPopover, NgbPopoverConfig } from '@ng-bootstrap/ng-bootstrap';
+
+hljs.registerLanguage('json', json);
 
 @Component({
   selector: 'app-participant-table',
@@ -30,10 +38,15 @@ export class ParticipantTableComponent {
 
   constructor(
     private store: Store<fromRoot.State>,
+    private sanitizer: DomSanitizer,
+    private jsonPipe: JsonPipe,
+    popoverConfig: NgbPopoverConfig
   ) { 
     this.store.select(selectSettings).subscribe((settings: SettingState) => {
       this.settings = settings;
     });
+
+    popoverConfig.container = 'body';
   }
 
   getColor(i: any) {
@@ -42,5 +55,22 @@ export class ParticipantTableComponent {
 
   getUsername(item: NodeOwner) {
     return item.pub_key;
+  }
+
+  channelInfo(item:IRing) {
+    console.log(hljs.highlight(this.jsonPipe.transform(item[3][0]), { language: 'json' }).value);
+
+    return this.sanitizer.bypassSecurityTrustHtml(hljs.highlight(this.jsonPipe.transform(item[3][0]), { language: 'json' }).value);
+  }
+
+  routingPolicyPopover(popover: NgbPopover, policy: RoutingPolicy, nodeOwner: NodeOwner) {
+    if (popover.isOpen()) {
+      popover.close()
+    } else {
+      popover.open({
+        title: `${nodeOwner.username_or_name}`,
+        value: this.sanitizer.bypassSecurityTrustHtml(hljs.highlight(this.jsonPipe.transform(policy), { language: 'json' }).value)
+      })
+    }
   }
 }

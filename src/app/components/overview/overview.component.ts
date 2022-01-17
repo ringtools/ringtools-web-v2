@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { timeHours } from 'd3';
 import { Observable } from 'rxjs';
 import { upsertNodeInfo } from 'src/app/actions/node-info.actions';
+import { setViewMode } from 'src/app/actions/setting.actions';
 import { NodeInfo } from 'src/app/models/node-info.model';
 import { NodeOwner } from 'src/app/models/node-owner.model';
 import { IRing } from 'src/app/models/ring.model';
@@ -57,7 +58,9 @@ export class OverviewComponent implements OnDestroy {
     this.lnData.channelSocket.emit('unsubscribe_all');
   }
 
-  viewChange(event: any) {}
+  viewChange(event: any) {
+    this.store.dispatch(setViewMode(event));
+  }
 
   downloadAsPng() {}
 

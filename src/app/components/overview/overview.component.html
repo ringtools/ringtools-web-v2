@@ -8,7 +8,7 @@
         <div class="col-md-8 participants">
             <h2>Ring participants
                 <div class="btn-group btn-small small btn-group-toggle" ngbRadioGroup name="names"
-                    [(ngModel)]="viewMode" (ngModelChange)="viewChange($event)">
+                    [(ngModel)]="settings.viewMode" (ngModelChange)="viewChange($event)">
                     <label ngbButtonLabel class="btn-primary btn-sm">
                         <input ngbButton type="radio" value="node"> Nodename
                     </label>

@@ -1848,10 +1848,15 @@
   resolved "https://registry.yarnpkg.com/@types/lz-string/-/lz-string-1.3.34.tgz#69bfadde419314b4a374bf2c8e58659c035ed0a5"
   integrity sha512-j6G1e8DULJx3ONf6NdR5JiR2ZY3K3PaaqiEuKYkLQO0Czfi1AzrtjfnfCROyWGeDd5IVMKCwsgSmMip9OWijow==
 
-"@types/node@*", "@types/node@>=10.0.0", "@types/node@^17.0":
+"@types/node@*", "@types/node@>=10.0.0":
   version "17.0.8"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-17.0.8.tgz#50d680c8a8a78fe30abe6906453b21ad8ab0ad7b"
   integrity sha512-YofkM6fGv4gDJq78g4j0mMuGMkZVxZDgtU0JRdx6FgiJDG+0fY0GKVolOV8WqVmEhLCXkQRjwDdKyPxJp/uucg==
+
+"@types/node@^17.0.9":
+  version "17.0.9"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-17.0.9.tgz#0b7f161afb5b1cc12518d29b2cdc7175d5490628"
+  integrity sha512-5dNBXu/FOER+EXnyah7rn8xlNrfMOQb/qXnw4NQgLkCygKBKhdmF/CA5oXVOKZLBEahw8s2WP9LxIcN/oDDRgQ==
 
 "@types/parse-json@^4.0.0":
   version "4.0.0"
@@ -4399,6 +4404,11 @@ hdr-histogram-percentiles-obj@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/hdr-histogram-percentiles-obj/-/hdr-histogram-percentiles-obj-3.0.0.tgz#9409f4de0c2dda78e61de2d9d78b1e9f3cba283c"
   integrity sha512-7kIufnBqdsBGcSZLPJwqHT3yhk1QTsSlFsVD3kx5ixH/AlgBs9yM1q6DPhXZ8f8gtdqgh7N7/5btRLpQsS2gHw==
+
+highlight.js@^11.4.0:
+  version "11.4.0"
+  resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-11.4.0.tgz#34ceadd49e1596ee5aba3d99346cdfd4845ee05a"
+  integrity sha512-nawlpCBCSASs7EdvZOYOYVkJpGmAOKMYZgZtUqSRqodZE0GRVcFKwo1RcpeOemqh9hyttTdd5wDBwHkuSyUfnA==
 
 hosted-git-info@^4.0.1:
   version "4.1.0"
