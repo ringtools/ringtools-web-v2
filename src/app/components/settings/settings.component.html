@@ -1,45 +1,50 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-12 col-lg-4" >
-            <form>
-                <div class="form-group">
-                    <label for="ringName">Ringname</label>
-                    <input type="text" class="form-control" id="ringName" placeholder="Ring Name" [(ngModel)]="ringName"
-                        name="ringName">
-                    <button (click)="processRingname()" class="btn btn-primary mb-2">Save Ring Name</button>
-                    <button (click)="parseCapacityName()" class="btn btn-secondary mb-2">Parse capacity</button>
+        <div class="col-md-12 col-lg-4">
+            <form [formGroup]="ringForm" (submit)="saveRingSettings()">
+                <div class="form-group row">
+                    <label for="ringName" class="col-sm-2 col-form-label">Ringname</label>
+                    <div class="col-sm-10 input-group">
+                        <input type="text" class="form-control" formControlName="name" id="ringName"
+                            placeholder="Ring Name" name="ringName">
+                        <div class="input-group-append">
+                            <button (click)="parseCapacityName()" class="btn btn-secondary">Parse capacity</button>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="ringName">Ring capacity</label>
-                    <input type="number" class="form-control" id="ringName" placeholder="Ring size" [(ngModel)]="ringSize"
-                        name="ringSize">
-                    <button (click)="setRingSize()" class="btn btn-primary mb-2">Save Ring Size</button>
+
+                <div class="form-group row">
+                    <label for="ringName" class="col-sm-2 col-form-label">Ring size</label>
+                    <div class="col-sm-10">
+                        <input type="number" class="form-control" id="ringName" placeholder="Ring size"
+                            formControlName="size" name="ringSize">
+                    </div>
                 </div>
+
                 <div class="form-group">
-                    <label for="pubkeys">Import groupnodes from 🧀 CheeseRobot ₿ <small>(or use <a href="https://t.me/ringtools_bot" target="_blank">@ringtools_bot</a> command <code>/ringurl</code>)</small></label>
+                    <label for="pubkeys">Import groupnodes from 🧀 CheeseRobot ₿ <small>(or use <a
+                                href="https://t.me/ringtools_bot" target="_blank">@ringtools_bot</a> command
+                            <code>/ringurl</code>)</small></label>
                     <textarea class="form-control" id="pubkeys" rows="3" [(ngModel)]="pubkeysText"
                         [ngModelOptions]="{standalone: true}" spellcheck="false"></textarea>
                     <button (click)="processGroupnodes()" class="btn btn-primary mb-2">Import Groupnodes</button>
                 </div>
-                <!-- <div class="form-group">
-                    <label for="ringName">LND PubSub server</label>
-                    <input type="text" class="form-control" id="pubsubServer" placeholder="PubSub Server" [(ngModel)]="pubsubServer"
-                        [ngModelOptions]="{standalone: true}">
-                    <button (click)="setPubSubServer()" class="btn btn-primary mb-2">Save server</button>
-                </div> -->
 
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="showSrRofLogo" [(ngModel)]="showLogo"
-                    (ngModelChange)="updateShowLogo($event)"
-                    [ngModelOptions]="{standalone: true}">
-                    <label class="form-check-label" for="showSrRofLogo">
-                      Show SR RoF logo
-                    </label>
-                  </div>
+                    <div class="custom-control custom-switch">
+
+                        <input class="custom-control-input" type="checkbox" value="" id="showSrRofLogo"
+                            [(ngModel)]="showLogo" (ngModelChange)="updateShowLogo($event)"
+                            [ngModelOptions]="{standalone: true}">
+                        <label class="custom-control-label" for="showSrRofLogo">
+                            Show SR RoF logo
+                        </label>
+                    </div>
+                </div>
             </form>
         </div>
         <div class="col-md-12 col-lg-8">
-            <form>
+            <form [formGroup]="nodeForm" (submit)="addNodeOwner()">
                 <table class="table table-sm table-striped small">
                     <thead>
                         <tr>
@@ -51,7 +56,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <ng-container *ngFor="let item of nodeOwners$ | async">
+                        <ng-container *ngFor="let item of nodeOwners">
                             <tr>
                                 <td class="service-icon amboss">
                                     <a [attr.href]="'https://amboss.space/node/' +  item.pub_key" target="_blank">
@@ -68,9 +73,10 @@
                                 </td>
                                 <td>{{ item.nodename }}</td>
                                 <td>{{ item.username_or_name }}</td>
-                                <td><button class="btn btn-danger btn-small btn-sm delete-btn" (click)="removeNodeOwner(item)">
-                                    <i class="bi bi-trash"></i>
-                                </button>
+                                <td><button class="btn btn-danger btn-small btn-sm delete-btn"
+                                        (click)="removeNodeOwner(item)">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
                                 </td>
                             </tr>
                         </ng-container>
@@ -83,17 +89,17 @@
                             <th scope="row" class="no-padding" colspan="1">
                                 <div class="form-check">
                                     <input class="form-check-input position-static" type="text" id="pubkey"
-                                        [(ngModel)]="addPubKey" name="pubKey" placeholder="Public Key">
+                                        formControlName="pubKey" name="pubKey" placeholder="Public Key">
                                 </div>
                             </th>
                             <td>{{ tempNodename }}</td>
                             <td class="no-padding">
                                 <div class="form-check">
                                     <input class="form-check-input position-static" type="text" id="TG username"
-                                        [(ngModel)]="addTgUsername" name="tgUserName" placeholder="TG username">
+                                        formControlName="tgUsername" name="tgUsername" placeholder="TG username">
                                 </div>
                             </td>
-                            <td><button class="btn btn-primary btn-small btn-sm" (click)="addNodeOwner()">Add</button>
+                            <td><button class="btn btn-primary btn-small btn-sm">Add</button>
                             </td>
                         </tr>
                     </tbody>

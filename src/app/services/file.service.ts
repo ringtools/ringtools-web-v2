@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ExportFile } from '../models/export_file.enum';
 import { NodeOwner } from '../models/node-owner.model';
+import { IRing } from '../models/ring.model';
 
 @Injectable({
   providedIn: 'root',
@@ -8,7 +9,7 @@ import { NodeOwner } from '../models/node-owner.model';
 export class FileService {
   constructor() {}
 
-  convertToCsv(ringParticipants:NodeOwner[], header: boolean = true) {
+  convertToCsv(ringParticipants: NodeOwner[], header: boolean = true) {
     let pkContents = '';
 
     if (header)
@@ -36,9 +37,9 @@ export class FileService {
           nodename: parts[1],
           pub_key: parts[2],
           username: parts[4],
-          username_or_name: undefined
+          username_or_name: '',
         };
-        segments.push(nodeOwner);
+        segments.push(Object.assign(new NodeOwner(), nodeOwner));
       }
     }
     return segments;
@@ -62,7 +63,7 @@ export class FileService {
     let add = '';
     for (let p of ringParticipants) {
       pkContents += `${add}${p.first_name},${p.username},${p.pub_key},${p.nodename}`;
-      add = "|";
+      add = '|';
     }
 
     return pkContents;
@@ -74,12 +75,12 @@ export class FileService {
     for (let line of segmentLines) {
       let parts = line.split(',');
       if (parts.length > 1) {
-        let nodeOwner:NodeOwner = {
+        let nodeOwner: NodeOwner = {
           first_name: parts[0],
           username: parts[1],
           pub_key: parts[2],
           nodename: parts[3],
-          username_or_name: undefined
+          username_or_name: '',
         };
         segments.push(nodeOwner);
       }
@@ -87,7 +88,32 @@ export class FileService {
     return segments;
   }
 
-  generateAndDownload(file_template: ExportFile) {
+  generateAndDownload(file_template: ExportFile, ring: IRing) {
+    let data: string = '';
+    switch (file_template) {
+      case ExportFile.RingToolsChannelsTxt:
+        for (let no of ring) {
+          data += no[2] + '\r\n';
+        }
+        break;
+      case ExportFile.RingToolsPubKeysTxt:
+        for (let no of ring) {
+          data += `${no[0].pub_key},${no[0].username_or_name}\r\n`;
+        }
+        break;
+      case ExportFile.IgniterPubkeys:
+        data = 'declare pub_keys=(\r\n';
 
+        for (let no of ring) {
+          data += `    ${no[0].pub_key} # ${no[0].username_or_name}\r\n`;
+        }
+
+        data += ')';
+        break;
+      default:
+        break;
+    }
+
+    this.doDownloadFileWithData(data, file_template);
   }
 }

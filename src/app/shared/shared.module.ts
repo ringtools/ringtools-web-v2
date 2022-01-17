@@ -12,6 +12,7 @@ import { BrowserModule } from '@angular/platform-browser';
     ToastComponent
   ],
   imports: [
+    BrowserModule,
     NgbToastModule,
     CommonModule
   ],

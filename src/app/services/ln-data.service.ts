@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { io, Socket } from 'socket.io-client';
 import { NodeInfo } from '../models/node-info.model';
 import { HttpClient } from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -22,5 +23,9 @@ export class LnDataService {
     return this.http.get<NodeInfo>(
       `http://localhost:7464/node/${pubKey}`
     );
+  }
+
+  getNodeInfoAsync(pubKey: string) {
+    return firstValueFrom(this.getNodeInfo(pubKey));
   }
 }

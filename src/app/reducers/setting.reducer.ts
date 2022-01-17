@@ -31,7 +31,7 @@ export const settingReducer = createReducer(
   }),
   on(SettingActions.setRingSize, 
     (state: SettingState, {ringSize}) => {
-      return {...state, ringSize: ringSize }
+      return {...state, ringSize: Number(ringSize) }
   }),
   on(SettingActions.setViewMode, 
     (state: SettingState, {viewMode}) => {

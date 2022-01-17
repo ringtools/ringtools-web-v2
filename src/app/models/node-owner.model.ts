@@ -1,6 +1,6 @@
 export class NodeOwner {
   id?: string;
-  first_name?: string = '';
+  first_name: string = '';
   last_name?: string = '';
   pub_key: string = '';
   nodename?: string;
@@ -12,5 +12,9 @@ export class NodeOwner {
       return this.first_name;
     }
     return `@${this.username}`;
+  }
+
+  set username_or_name(_username: string) {
+
   }
 }

@@ -9,6 +9,8 @@ import { selectSettings } from 'src/app/selectors/setting.selectors';
 import { selectRingSettings } from 'src/app/selectors/ring-setting.selectors';
 import { RingSettingsState } from 'src/app/reducers/ring-setting.reducer';
 import { RingSetting } from 'src/app/models/ring-setting.model';
+import { loadNodeOwners } from 'src/app/actions/node-owner.actions';
+import { loadRingSetting } from 'src/app/actions/setting.actions';
 
 @Component({
   selector: 'app-navigation',
@@ -47,8 +49,8 @@ export class NavigationComponent {
     return this.settings.ringName;
   }
 
-  // TODO: Add type
-  loadSettings(item: any) {
-    
+  loadSettings(item: RingSetting) {
+    this.store.dispatch(loadNodeOwners({ nodeOwners: item.ringParticipants }));
+    this.store.dispatch(loadRingSetting(item));
   }
 }

@@ -5,6 +5,6 @@ export class RingSetting {
   ringName!: string;
   cleanRingName!: string;
   ringParticipants!: NodeOwner[];
-  ringSize?: number;
+  ringSize!: number;
   ringLeader?: NodeOwner;
 }

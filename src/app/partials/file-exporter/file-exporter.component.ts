@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ExportFile } from 'src/app/models/export_file.enum';
 import { FileService } from 'src/app/services/file.service';
+import { RingDataService } from 'src/app/services/ring-data.service';
 
 @Component({
   selector: 'app-file-exporter',
@@ -10,22 +11,23 @@ import { FileService } from 'src/app/services/file.service';
 export class FileExporterComponent {
 
   constructor(
-    private file: FileService
+    private file: FileService,
+    private ringData: RingDataService
   ) { }
 
   persistOrder() {
     console.log('Method not implemented');
 }
 
-  downloadChannelsTxt() {
-    this.file.generateAndDownload(ExportFile.RingToolsChannelsTxt);
+  async downloadChannelsTxt() {
+    this.file.generateAndDownload(ExportFile.RingToolsChannelsTxt, await this.ringData.getRing());
   }
 
-  downloadPubKeysTxt() {
-    this.file.generateAndDownload(ExportFile.RingToolsPubKeysTxt);
+  async downloadPubKeysTxt() {
+    this.file.generateAndDownload(ExportFile.RingToolsPubKeysTxt, await this.ringData.getRing());
   }
 
-  downloadIgniterPubkeys() {
-    this.file.generateAndDownload(ExportFile.IgniterPubkeys);
+  async downloadIgniterPubkeys() {
+    this.file.generateAndDownload(ExportFile.IgniterPubkeys, await this.ringData.getRing());
   }
 }

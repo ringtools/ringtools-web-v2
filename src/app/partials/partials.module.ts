@@ -9,11 +9,15 @@ import { FormsModule } from '@angular/forms';
 import { NodeConnectionsComponent } from './node-connections/node-connections.component';
 import { VisModule } from '../vis/vis.module';
 import { HttpClientModule } from '@angular/common/http';
+import { ParticipantRingComponent } from './participant-ring/participant-ring.component';
+import { ParticipantTableComponent } from './participant-table/participant-table.component';
 
 
 
 @NgModule({
   declarations: [
+    ParticipantRingComponent,
+    ParticipantTableComponent,
     FileExporterComponent,
     EditRingOrderComponent,
     ReorderParticipantsComponent,
@@ -28,6 +32,8 @@ import { HttpClientModule } from '@angular/common/http';
     CommonModule
   ],
   exports: [
+    ParticipantRingComponent,
+    ParticipantTableComponent,
     FileExporterComponent,
     EditRingOrderComponent,
     ReorderParticipantsComponent,

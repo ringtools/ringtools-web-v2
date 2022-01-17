@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { NodeOwner } from '../models/node-owner.model';
+import { RingSetting } from '../models/ring-setting.model';
 
 export const loadSettings = createAction(
   '[Setting] Load Settings'
@@ -10,9 +11,14 @@ export const setRingName = createAction(
   (ringName: string) => ({ringName})
 );
 
+export const loadRingSetting = createAction(
+  '[Setting] Load Ring Setting',
+  (ringSetting: RingSetting) => ({ringSetting})
+);
+
 export const setRingSize = createAction(
   '[Setting] set Ring Size',
-  (ringSize: number) => ({ringSize})
+  (ringSize: number | undefined) => ({ringSize})
 );
 
 export const setRingLeader = createAction(
