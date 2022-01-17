@@ -52,7 +52,7 @@ export class RingDataService {
   addNodeOwner(pubKey: string, tgUsername: string) {
     this.lnData.getNodeInfo(pubKey).subscribe((nodeInfo: NodeInfo) => {
       let no: NodeOwner = {
-        pub_key: nodeInfo.node.alias,
+        pub_key: nodeInfo.node.pub_key,
         nodename: nodeInfo.node.alias,
         first_name: tgUsername,
         username: tgUsername,

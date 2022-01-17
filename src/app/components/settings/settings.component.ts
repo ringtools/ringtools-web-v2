@@ -188,6 +188,7 @@ export class SettingsComponent implements OnInit {
       ringSize: ringSize,
     };
     this.store.dispatch(upsertRingSetting({ ringSetting: ringSettings }));
+    this.store.dispatch(setRingName(ringName));
   }
 
   processGroupnodes() {

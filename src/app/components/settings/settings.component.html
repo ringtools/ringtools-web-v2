@@ -8,15 +8,16 @@
                         <input type="text" class="form-control" formControlName="name" id="ringName"
                             placeholder="Ring Name" name="ringName">
                         <div class="input-group-append">
-                            <button (click)="parseCapacityName()" class="btn btn-secondary" type="button">Parse capacity</button>
+                            <button (click)="parseCapacityName()" class="btn btn-secondary" type="button"
+                                id="parseCapacityBtn">Parse capacity</button>
                         </div>
                     </div>
                 </div>
 
                 <div class="form-group row">
-                    <label for="ringName" class="col-sm-2 col-form-label">Ring size</label>
+                    <label for="ringSize" class="col-sm-2 col-form-label">Ring size</label>
                     <div class="col-sm-10">
-                        <input type="number" class="form-control" id="ringName" placeholder="Ring size"
+                        <input type="number" class="form-control" id="ringSize" placeholder="Ring size"
                             formControlName="size" name="ringSize">
                     </div>
                 </div>
@@ -27,7 +28,8 @@
                             <code>/ringurl</code>)</small></label>
                     <textarea class="form-control" id="pubkeys" rows="3" [(ngModel)]="pubkeysText"
                         [ngModelOptions]="{standalone: true}" spellcheck="false"></textarea>
-                    <button (click)="processGroupnodes()" class="btn btn-primary mb-2">Import Groupnodes</button>
+                    <button (click)="processGroupnodes()" class="btn btn-primary mb-2" id="importGroupnodesBtn"
+                        type="button">Import Groupnodes</button>
                 </div>
 
                 <div class="form-check">
@@ -71,10 +73,10 @@
                                 <td scope="row" class="node_key">
                                     <span>{{ item.pub_key }}</span>
                                 </td>
-                                <td>{{ item.nodename }}</td>
+                                <td class="node_name">{{ item.nodename }}</td>
                                 <td>{{ item.username_or_name }}</td>
                                 <td><button class="btn btn-danger btn-small btn-sm delete-btn"
-                                        (click)="removeNodeOwner(item)">
+                                        (click)="removeNodeOwner(item)" name="removeNodeOwnerBtn">
                                         <i class="bi bi-trash"></i>
                                     </button>
                                 </td>
@@ -99,14 +101,13 @@
                                         formControlName="tgUsername" name="tgUsername" placeholder="TG username">
                                 </div>
                             </td>
-                            <td><button class="btn btn-primary btn-small btn-sm">Add</button>
+                            <td><button class="btn btn-primary btn-small btn-sm" id="addNodeOwnerBtn">Add</button>
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </form>
-            <button (click)="saveRingSettings()" class="btn btn-primary mb-2">Save Ring Settings</button>
-            <button (click)="exportJSON()" class="btn btn-secondary mb-2">Copy share URL</button>
+            <button (click)="saveRingSettings()" class="btn btn-primary mb-2" name="saveRingSettings" id="saveRingSettings">Save Ring Settings</button>
             <p *ngIf="shareUrl"><small>copied to clipboard <a [href]="shareUrl">link</a></small></p>
             <h3>Saved Rings</h3>
             <ul class="list-group small">
