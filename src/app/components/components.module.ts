@@ -9,6 +9,7 @@ import { PartialsModule } from '../partials/partials.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbButtonsModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserModule } from '@angular/platform-browser';
+import { RingOnlyComponent } from './ring-only/ring-only.component';
 
 
 
@@ -17,7 +18,8 @@ import { BrowserModule } from '@angular/platform-browser';
     HomeComponent,
     OverviewComponent,
     SettingsComponent,
-    VisualComponent
+    VisualComponent,
+    RingOnlyComponent
   ],
   imports: [
     BrowserModule,

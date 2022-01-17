@@ -10,7 +10,7 @@ import { LnDataService } from './ln-data.service';
 import { NodeInfo } from '../models/node-info.model';
 import { NodeOwner } from '../models/node-owner.model';
 import { IRing } from '../models/ring.model';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { selectNodeOwners } from '../selectors/node-owner.selectors';
 
 @Injectable({
@@ -19,6 +19,9 @@ import { selectNodeOwners } from '../selectors/node-owner.selectors';
 export class RingDataService {
   nodeOwners$!: Observable<NodeOwner[]>;
   nodeOwners: NodeOwner[] = [];
+
+  private actionSource = new BehaviorSubject('default message');
+  currentAction = this.actionSource.asObservable();
   
   constructor(
     private store: Store<fromRoot.State>,
@@ -77,4 +80,7 @@ export class RingDataService {
     return ring;
   }
 
+  doAction(action: string) {
+    this.actionSource.next(action);
+  }
 }

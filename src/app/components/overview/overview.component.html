@@ -1,8 +1,8 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-4 chart-container d-inline-block" id="circle">
+        <div class="col-md-4 chart-container d-inline-block" id="circle" *ngIf="ring !== undefined">
             <app-participant-ring class="w-100 h-100 d-flex" [ringName]="settings.ringName"
-                [showLogo]="settings.showLogo" id="rofvisual"></app-participant-ring>
+                [showLogo]="settings.showLogo" id="rofvisual" [ring]="ring"></app-participant-ring>
         </div>
 
         <div class="col-md-8 participants">

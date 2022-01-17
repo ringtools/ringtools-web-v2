@@ -13,6 +13,7 @@ import { VisNetworkService } from './vis-network.service';
  * @implements {OnChanges}
  */
 @Directive({
+  // eslint-disable-next-line @angular-eslint/directive-selector
   selector: '[visNetwork]',
 })
 export class VisNetworkDirective implements OnInit, OnDestroy, OnChanges {
@@ -23,7 +24,7 @@ export class VisNetworkDirective implements OnInit, OnDestroy, OnChanges {
    * @type {string}
    * @memberOf VisNetworkDirective
    */
-  @Input('visNetwork')
+  @Input()
   public visNetwork!: string;
 
   /**

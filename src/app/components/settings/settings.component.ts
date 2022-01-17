@@ -8,6 +8,7 @@ import {
   loadRingSetting,
   setRingName,
   setRingSize,
+  setShowLogo,
 } from 'src/app/actions/setting.actions';
 import { NodeOwner } from 'src/app/models/node-owner.model';
 import { RingSetting } from 'src/app/models/ring-setting.model';
@@ -208,7 +209,9 @@ export class SettingsComponent implements OnInit {
     }
   }
 
-  updateShowLogo(event: any) {}
+  updateShowLogo(event: any) {
+    this.store.dispatch(setShowLogo(event));
+  }
 
   processRingname() {}
 
