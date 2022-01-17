@@ -1,13 +1,13 @@
-import { reducer, initialState } from './setting.reducer';
+import { reducer, initialSettingState } from './setting.reducer';
 
 describe('Setting Reducer', () => {
   describe('an unknown action', () => {
     it('should return the previous state', () => {
       const action = {} as any;
 
-      const result = reducer(initialState, action);
+      const result = reducer(initialSettingState, action);
 
-      expect(result).toBe(initialState);
+      expect(result).toBe(initialSettingState);
     });
   });
 });

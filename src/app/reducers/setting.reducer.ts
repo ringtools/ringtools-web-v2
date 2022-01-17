@@ -12,7 +12,7 @@ export interface SettingState {
   ringLeader?: NodeOwner;
 }
 
-export const initialState: SettingState = {
+export const initialSettingState: SettingState = {
   ringName: 'Unconfigured',
   viewMode: 'tg',
   showLogo: false,
@@ -20,7 +20,7 @@ export const initialState: SettingState = {
 };
 
 export const settingReducer = createReducer(
-  initialState,
+  initialSettingState,
   on(SettingActions.setRingName, 
     (state: SettingState, {ringName}) => {
       return {...state, ringName: ringName }
