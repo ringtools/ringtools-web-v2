@@ -1,3 +1,5 @@
 export const environment = {
-  production: true
+  production: true,
+  networkClass: null,
+  apiEndpoint: "https://rof.tools"
 };

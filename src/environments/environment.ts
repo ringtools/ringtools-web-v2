@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   networkClass: null,
-  apiEndpoint: 'http://localhost:7464'
+  apiEndpoint: process.env['API_ENDPOINT']
 };
 
 /*

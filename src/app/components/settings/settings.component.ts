@@ -161,8 +161,6 @@ export class SettingsComponent implements OnInit {
     this.ringForm.get('size')?.patchValue(capacity);
   }
 
-  exportJSON() {}
-
   saveRingSettings() {
     const ringName = this.ringForm.get('name')?.value;
     const ringSize = this.ringForm.get('size')?.value;
