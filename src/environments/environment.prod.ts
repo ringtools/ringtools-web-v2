@@ -1,5 +1,6 @@
+/// <reference types="node" />
 export const environment = {
   production: true,
   networkClass: null,
-  apiEndpoint: "https://rof.tools"
+  apiEndpoint: process.env["API_ENDPOINT"] || ''
 };
