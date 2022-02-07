@@ -67,17 +67,24 @@ export class RingDataService {
     let ring: IRing = [];
     for (const [i, node] of this.nodeOwners.entries()) {
       let nextIndex = (i + 1) % this.nodeOwners.length;
-      const nodeInfo = Object.assign(
-        new NodeInfo(),
-        await this.lnData.getNodeInfoAsync(this.nodeOwners[i].pub_key)
-      );
-      let channel = nodeInfo.hasChannelWith(this.nodeOwners[nextIndex].pub_key);
+
+      let nodeInfo, channel;
+      try {
+        nodeInfo = Object.assign(
+          new NodeInfo(),
+          await this.lnData.getNodeInfoAsync(this.nodeOwners[i].pub_key)
+        );
+      } catch {}
+
+      if (nodeInfo) {
+        channel = nodeInfo.hasChannelWith(this.nodeOwners[nextIndex].pub_key);
+      }
 
       ring.push([
         Object.assign(new NodeOwner(), this.nodeOwners[i]),
         Object.assign(new NodeOwner(), this.nodeOwners[nextIndex]),
         channel,
-        channel
+        channel && nodeInfo
           ? nodeInfo.getChannelPolicies(
               this.nodeOwners[nextIndex].pub_key,
               channel

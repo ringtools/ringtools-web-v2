@@ -77,9 +77,8 @@ export class NodeConnectionsComponent implements OnInit {
 
   buildNodes() {
     for (let node of this.nodeOwners) {
-      let data = this.lnData
-        .getNodeInfo(node.pub_key)
-        .subscribe((data: NodeInfo) => {
+      let data = this.lnData.getNodeInfo(node.pub_key).subscribe({
+        next: (data: NodeInfo) => {
           let label;
 
           //if (this.viewMode == 'node') {
@@ -114,7 +113,11 @@ export class NodeConnectionsComponent implements OnInit {
               continue channelloop;
             }
           }
-        });
+        },
+        error: (err) => {
+          console.log('Error', err);
+        },
+      });
     }
   }
 }

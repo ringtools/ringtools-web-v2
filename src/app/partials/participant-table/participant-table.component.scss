@@ -1,1 +1,14 @@
 @import "~highlight.js/styles/github-dark.css";
+
+.error {
+
+    th {
+        border-left: 5px dotted #f00;
+    }
+
+
+}
+
+td.error {
+    background: #f00;
+}
