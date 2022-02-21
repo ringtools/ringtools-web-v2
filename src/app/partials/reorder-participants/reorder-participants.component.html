@@ -1,18 +1,24 @@
- <form class="form-inline">
-    <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Ringleader</label>
-    <select class="form-control"  [(ngModel)]="selectedIgniter" name="selectedIgniter">
-      <option [value]="undefined">Select</option>
-      <ng-container  *ngFor="let s of nodeOwners">
-      <option [ngValue]="s">
-        <ng-template [ngIf]="(settings$ | async)?.viewMode === 'tg'" [ngIfElse]="elseBlock">
-          {{ s.first_name }}
-        </ng-template>
-        <ng-template #elseBlock>
-          {{ s.nodename }}
-        </ng-template>
-      </option>
-    </ng-container>
-    </select>
-    <button type="submit" class="btn btn-primary my-1" (click)="reorderIgniter()">Reorder</button>
+<form class="row">
+  <div class="col-12">
+  <div class="form-floating">
 
-  </form>
+    <select class="form-select" [(ngModel)]="selectedIgniter" name="selectedIgniter" id="floatingSelect">
+      <option [value]="undefined">Select</option>
+      <ng-container *ngFor="let s of nodeOwners">
+        <option [ngValue]="s">
+          <ng-template [ngIf]="(settings$ | async)?.viewMode === 'tg'" [ngIfElse]="elseBlock">
+            {{ s.first_name }}
+          </ng-template>
+          <ng-template #elseBlock>
+            {{ s.nodename }}
+          </ng-template>
+        </option>
+      </ng-container>
+    </select>
+    <label for="floatingSelect">Ringleader</label>
+  </div>
+</div>
+  <div class="col-12">
+    <button type="submit" class="btn btn-primary my-1" (click)="reorderIgniter()">Reorder</button>
+  </div>
+</form>

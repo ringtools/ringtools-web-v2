@@ -2,19 +2,19 @@
     <div class="row">
         <div class="col-md-12 col-lg-4">
             <form [formGroup]="ringForm" (submit)="saveRingSettings()">
-                <div class="form-group row">
+                <div class="row mb-3">
                     <label for="ringName" class="col-sm-2 col-form-label">Ringname</label>
-                    <div class="col-sm-10 input-group">
+                    <div class="col-sm-10">
+                        <div class="input-group">
                         <input type="text" class="form-control" formControlName="name" id="ringName"
                             placeholder="Ring Name" name="ringName">
-                        <div class="input-group-append">
-                            <button (click)="parseCapacityName()" class="btn btn-secondary" type="button"
-                                id="parseCapacityBtn">Parse capacity</button>
+                        <button (click)="parseCapacityName()" class="btn btn-secondary" type="button"
+                            id="parseCapacityBtn">Parse capacity</button>
                         </div>
                     </div>
                 </div>
 
-                <div class="form-group row">
+                <div class="row mb-3">
                     <label for="ringSize" class="col-sm-2 col-form-label">Ring size</label>
                     <div class="col-sm-10">
                         <input type="number" class="form-control" id="ringSize" placeholder="Ring size"
@@ -22,7 +22,7 @@
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="mb-3">
                     <label for="pubkeys">Import groupnodes from 🧀 CheeseRobot ₿ <small>(or use <a
                                 href="https://t.me/ringtools_bot" target="_blank">@ringtools_bot</a> command
                             <code>/ringurl</code>)</small></label>
@@ -32,16 +32,13 @@
                         type="button">Import Groupnodes</button>
                 </div>
 
-                <div class="form-check">
-                    <div class="custom-control custom-switch">
+                <div class="form-check form-switch">
 
-                        <input class="custom-control-input" type="checkbox" value="" id="showSrRofLogo"
-                            [(ngModel)]="showLogo" (ngModelChange)="updateShowLogo($event)"
-                            [ngModelOptions]="{standalone: true}">
-                        <label class="custom-control-label" for="showSrRofLogo">
-                            Show SR RoF logo
-                        </label>
-                    </div>
+                    <input class="form-check-input" type="checkbox" value="" id="showSrRofLogo" [(ngModel)]="showLogo"
+                        (ngModelChange)="updateShowLogo($event)" [ngModelOptions]="{standalone: true}">
+                    <label class="form-check-label" for="showSrRofLogo">
+                        Show SR RoF logo
+                    </label>
                 </div>
             </form>
         </div>
@@ -89,17 +86,13 @@
                             </th>
 
                             <th scope="row" class="no-padding" colspan="1">
-                                <div class="form-check">
-                                    <input class="form-check-input position-static" type="text" id="pubkey"
-                                        formControlName="pubKey" name="pubKey" placeholder="Public Key">
-                                </div>
+                                <input class="form-control form-control-sm" type="text" id="pubkey"
+                                    formControlName="pubKey" name="pubKey" placeholder="Public Key">
                             </th>
                             <td>{{ tempNodename }}</td>
                             <td class="no-padding">
-                                <div class="form-check">
-                                    <input class="form-check-input position-static" type="text" id="TG username"
-                                        formControlName="tgUsername" name="tgUsername" placeholder="TG username">
-                                </div>
+                                <input class="form-control form-control-sm" type="text" id="TG username"
+                                    formControlName="tgUsername" name="tgUsername" placeholder="TG username">
                             </td>
                             <td><button class="btn btn-primary btn-small btn-sm" id="addNodeOwnerBtn">Add</button>
                             </td>
@@ -107,7 +100,8 @@
                     </tbody>
                 </table>
             </form>
-            <button (click)="saveRingSettings()" class="btn btn-primary mb-2" name="saveRingSettings" id="saveRingSettings">Save Ring Settings</button>
+            <button (click)="saveRingSettings()" class="btn btn-primary mb-2" name="saveRingSettings"
+                id="saveRingSettings">Save Ring Settings</button>
             <p *ngIf="shareUrl"><small>copied to clipboard <a [href]="shareUrl">link</a></small></p>
             <h3>Saved Rings</h3>
             <ul class="list-group small">
@@ -116,10 +110,12 @@
                     <span [innerHTML]="emojiPrefix(item)"></span>
                     <div class="btn-group btn-small small btn-group-toggle" ngbRadioGroup>
                         <label ngbButtonLabel class="btn-success btn-sm">
-                            <input ngbButton type="radio" value="node" (click)="loadSettings(item)"> Load
+                            <input ngbButton type="radio" value="node" (click)="loadSettings(item)" class="btn-check">
+                            Load
                         </label>
                         <label ngbButtonLabel class="btn-danger btn-sm">
-                            <input ngbButton type="radio" value="tg" (click)="removeSettings(item)"> Remove
+                            <input ngbButton type="radio" value="tg" (click)="removeSettings(item)" class="btn-check">
+                            Remove
                         </label>
                     </div>
                 </li>
