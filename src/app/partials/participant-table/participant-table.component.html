@@ -27,22 +27,22 @@
                     <td *ngIf="item[0]" class="node_key"><span>{{ item[0].nodename }}</span></td>
                     <td *ngIf="item[1]" class="node_key"><span>{{ item[1].nodename }}</span></td>
                 </ng-template>
-                <td [class.error]="item[3][0] && item[3][0].disabled === true">
+                <td [class.error]="item[3] && item[3][0] && item[3][0].disabled === true">
                     <div *ngIf="item[3] && item[3][0]" [ngbPopover]="popContent" [popoverTitle]="popTitle"
                         #p1="ngbPopover" triggers="manual" (click)="routingPolicyPopover(p1, item[3][0], item[0])">
                         <span>{{ item[3][0].fee_base_msat }}</span></div>
                 </td>
-                <td [class.error]="item[3][0] && item[3][0].disabled === true">
+                <td [class.error]="item[3] && item[3][0] && item[3][0].disabled === true">
                     <div *ngIf="item[3] && item[3][0]" [ngbPopover]="popContent" [popoverTitle]="popTitle"
                         #p1="ngbPopover" triggers="manual" (click)="routingPolicyPopover(p1, item[3][0], item[0])">
                         <span>{{ item[3][0].fee_rate_milli_msat }}</span></div>
                 </td>
-                <td [class.error]="item[3][1] && item[3][1].disabled === true">
+                <td [class.error]="item[3] && item[3][1] && item[3][1].disabled === true">
                     <div *ngIf="item[3] && item[3][1]" [ngbPopover]="popContent" [popoverTitle]="popTitle"
                         #p1="ngbPopover" triggers="manual" (click)="routingPolicyPopover(p1, item[3][1], item[1])">
                         <span>{{ item[3][1].fee_base_msat }}</span></div>
                 </td>
-                <td [class.error]="item[3][1] && item[3][1].disabled === true">
+                <td [class.error]="item[3] && item[3][1] && item[3][1].disabled === true">
                     <div *ngIf="item[3] && item[3][1]" [ngbPopover]="popContent" [popoverTitle]="popTitle"
                         #p1="ngbPopover" triggers="manual" (click)="routingPolicyPopover(p1, item[3][1], item[1])">
                         <span>{{ item[3][1].fee_rate_milli_msat }}</span></div>
