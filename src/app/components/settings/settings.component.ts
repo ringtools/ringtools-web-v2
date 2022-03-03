@@ -9,6 +9,7 @@ import {
   setRingName,
   setRingSize,
   setShowLogo,
+  setUseShortChannelIds,
 } from 'src/app/actions/setting.actions';
 import { NodeOwner } from 'src/app/models/node-owner.model';
 import { RingSetting } from 'src/app/models/ring-setting.model';
@@ -39,6 +40,7 @@ export class SettingsComponent implements OnInit {
 
   shareUrl: string = '';
   showLogo: boolean = true;
+  useShortChannelIds: boolean = false;
 
   settings!: SettingState;
 
@@ -64,6 +66,9 @@ export class SettingsComponent implements OnInit {
   ) {
     this.store.select(selectSettings).subscribe((settings: SettingState) => {
       this.settings = settings;
+
+      this.showLogo = settings.showLogo;
+      this.useShortChannelIds = settings.useShortChannelIds;
     });
 
     this.ringSettings$ = this.store.select(selectRingSettings);
@@ -210,6 +215,10 @@ export class SettingsComponent implements OnInit {
 
   updateShowLogo(event: any) {
     this.store.dispatch(setShowLogo(event));
+  }
+
+  updateUseShortChannelIds(event: any) {
+    this.store.dispatch(setUseShortChannelIds(event));
   }
 
   processRingname() {}

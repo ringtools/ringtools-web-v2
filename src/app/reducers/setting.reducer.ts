@@ -6,16 +6,20 @@ export const settingFeatureKey = 'setting';
 
 export interface SettingState {
   ringName: string
-  ringSize: number;
+  ringSize: number
   viewMode: string
   showLogo: boolean
-  ringLeader?: NodeOwner;
+  useShortChannelIds: boolean
+  locale: string
+  ringLeader?: NodeOwner
 }
 
 export const initialSettingState: SettingState = {
   ringName: 'Unconfigured',
   viewMode: 'tg',
   showLogo: false,
+  useShortChannelIds: false,
+  locale: 'en-US',
   ringSize: 0
 };
 
@@ -40,6 +44,10 @@ export const settingReducer = createReducer(
   on(SettingActions.setShowLogo, 
     (state: SettingState, {showLogo}) => {
       return {...state, showLogo: showLogo }
+  }),
+  on(SettingActions.setUseShortChannelIds, 
+    (state: SettingState, {useShortChannelIds}) => {
+      return {...state, useShortChannelIds: useShortChannelIds }
   }),
 );
 

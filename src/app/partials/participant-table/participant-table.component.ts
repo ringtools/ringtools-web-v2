@@ -14,6 +14,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { JsonPipe } from '@angular/common';
 import { RoutingPolicy } from 'src/app/models/routing_policy.model';
 import { NgbPopover, NgbPopoverConfig } from '@ng-bootstrap/ng-bootstrap';
+import * as bolt07 from 'bolt07';
 
 hljs.registerLanguage('json', json);
 
@@ -71,6 +72,22 @@ export class ParticipantTableComponent {
         title: `${nodeOwner.username_or_name}`,
         value: this.sanitizer.bypassSecurityTrustHtml(hljs.highlight(this.jsonPipe.transform(policy), { language: 'json' }).value)
       })
+    }
+  }
+
+  getChannelId(channelId: number) {
+    if (!channelId) return;
+    // FIXME bolt07 package doesn't work correctly with browser buffer implementation
+    if (this.settings.useShortChannelIds) {
+      let number = channelId;
+      try {
+      return bolt07.decodeChanId( { number });
+      } catch(err) {
+        console.log('Error converting', err)
+        return channelId;
+      }
+    } else {
+      return channelId;
     }
   }
 }

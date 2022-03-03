@@ -25,10 +25,10 @@ export class NavigationComponent {
   settings!: SettingState;
 
   links = [
-    { title: 'Home', route: '' },
-    { title: 'Overview', route: 'overview' },
-    { title: 'Visual', route: 'visual' },
-    { title: 'Settings', route: 'settings' }
+    { title: $localize `Home`, route: '' },
+    { title: $localize `Overview`, route: 'overview' },
+    { title: $localize `Visual`, route: 'visual' },
+    { title: $localize `Settings`, route: 'settings' }
   ];
 
   constructor(

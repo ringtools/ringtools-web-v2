@@ -18,5 +18,9 @@ export default (
       defaults: true
   }));
 
+  config.plugins?.push(new webpack.ProvidePlugin({
+    Buffer: ['buffer', 'Buffer'],
+}));
+
   return config;
 };

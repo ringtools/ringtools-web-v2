@@ -18,7 +18,7 @@
                     <pre><code [innerHTML]="value"></code></pre>
                 </ng-template>
 
-                <th scope="row" [style.background-color]="getColor(i)" class="channelCol">{{ item[2] }}</th>
+                <th scope="row" [style.background-color]="getColor(i)" class="channelCol">{{ getChannelId(item[2]) }}</th>
                 <ng-template [ngIf]="settings.viewMode === 'tg'" [ngIfElse]="elseBlock">
                     <td *ngIf="item[0]">{{ item[0].username_or_name }}</td>
                     <td *ngIf="item[1]">{{ item[1].username_or_name }}</td>

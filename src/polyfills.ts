@@ -57,3 +57,4 @@ import 'zone.js'; // Included with Angular CLI.
 
 // Required for Dragula: https://github.com/valor-software/ng2-dragula#1-important-add-the-following-line-to-your-polyfillsts
 (window as any).global = window;
+global.Buffer = global.Buffer || require('buffer').Buffer;

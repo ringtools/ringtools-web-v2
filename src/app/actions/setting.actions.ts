@@ -35,3 +35,8 @@ export const setShowLogo = createAction(
   '[Setting] set Show Logo',
   (showLogo: boolean) => ({showLogo})
 );
+
+export const setUseShortChannelIds = createAction(
+  '[Setting] set Use Short Channel IDs',
+  (useShortChannelIds: boolean) => ({useShortChannelIds})
+);
