@@ -28,4 +28,8 @@ export class LnDataService {
   getNodeInfoAsync(pubKey: string) {
     return firstValueFrom(this.getNodeInfo(pubKey));
   }
+
+  donate(sats: number, message?: string) {
+    return this.http.post<{ invoice: string, expiry: number }>(`${this.apiEndpoint}/donate`, { sats, message });
+  }
 }

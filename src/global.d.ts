@@ -48,3 +48,5 @@ declare module 'save-svg-as-png' {
     options?: SaveSVGOptions
   ): void;
 }
+
+//declare module 'bolt07';

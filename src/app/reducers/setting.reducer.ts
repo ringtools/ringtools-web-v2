@@ -49,6 +49,10 @@ export const settingReducer = createReducer(
     (state: SettingState, {useShortChannelIds}) => {
       return {...state, useShortChannelIds: useShortChannelIds }
   }),
+  on(SettingActions.setLocale, 
+    (state: SettingState, {locale}) => {
+      return {...state, locale }
+  }),
 );
 
 export function reducer(state: SettingState | undefined, action: Action): any {

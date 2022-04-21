@@ -10,6 +10,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbButtonsModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserModule } from '@angular/platform-browser';
 import { RingOnlyComponent } from './ring-only/ring-only.component';
+import { DonationComponent } from './donation/donation.component';
+import { RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 
@@ -19,15 +22,17 @@ import { RingOnlyComponent } from './ring-only/ring-only.component';
     OverviewComponent,
     SettingsComponent,
     VisualComponent,
-    RingOnlyComponent
+    RingOnlyComponent,
+    DonationComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    NgbButtonsModule,
+    RouterModule,
     SharedModule,
-    PartialsModule
+    PartialsModule,
+    TranslateModule
   ],
   exports: [
     HomeComponent,

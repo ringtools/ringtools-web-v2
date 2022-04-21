@@ -1,4 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable, Subscriber, Subscription } from 'rxjs';
 import * as svg from 'save-svg-as-png';
@@ -27,7 +28,10 @@ export class OverviewComponent implements OnDestroy {
   ring: IRing = [];
   nodeData: Map<string, NodeInfo> = new Map<string, NodeInfo>();
   sub: Subscription = new Subscription();
-
+  viewModeForm = new FormGroup({
+    viewMode: new FormControl(''),
+  });
+  
   constructor(
     private store: Store<fromRoot.State>,
     private lnData: LnDataService
@@ -37,7 +41,13 @@ export class OverviewComponent implements OnDestroy {
 
     this.settings$.subscribe((settings: SettingState) => {
       this.settings = settings;
+      this.viewMode = settings.viewMode;
+      this.viewModeForm.setValue({ viewMode: this.settings.viewMode });
     });
+
+    this.viewModeForm.valueChanges.subscribe((e) => {
+      this.viewChange(e);
+    })
 
     this.sub.add(
       this.nodeOwners$.subscribe((nodeOwners: NodeOwner[]) => {
@@ -91,7 +101,11 @@ export class OverviewComponent implements OnDestroy {
   }
 
   viewChange(event: any) {
-    this.store.dispatch(setViewMode(event));
+    const val = event.viewMode;
+
+    if (this.viewMode != this.viewModeForm.get('viewMode')?.value) {
+      this.store.dispatch(setViewMode(val));
+    }
   }
 
   downloadAsPng() {

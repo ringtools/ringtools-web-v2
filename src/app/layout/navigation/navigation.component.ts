@@ -11,6 +11,7 @@ import { RingSettingsState } from 'src/app/reducers/ring-setting.reducer';
 import { RingSetting } from 'src/app/models/ring-setting.model';
 import { loadNodeOwners } from 'src/app/actions/node-owner.actions';
 import { loadRingSetting } from 'src/app/actions/setting.actions';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-navigation',
@@ -25,20 +26,22 @@ export class NavigationComponent {
   settings!: SettingState;
 
   links = [
-    { title: $localize `Home`, route: '' },
-    { title: $localize `Overview`, route: 'overview' },
-    { title: $localize `Visual`, route: 'visual' },
-    { title: $localize `Settings`, route: 'settings' }
+    { title: `Pages.HOME`, route: '' },
+    { title: `Pages.OVERVIEW`, route: 'overview' },
+    { title: `Pages.VISUAL`, route: 'visual' },
+    { title: `Pages.SETTINGS`, route: 'settings' }
   ];
 
   constructor(
     private router: Router,
     public route: ActivatedRoute,
     private store: Store<fromRoot.State>,
-
+    private translate: TranslateService
   ) { 
     this.store.select(selectSettings).subscribe((settings: SettingState) => {
       this.settings = settings;
+
+      this.translate.use(this.settings.locale)
     });
 
     this.ringSettings$ = this.store.select(selectRingSettings);

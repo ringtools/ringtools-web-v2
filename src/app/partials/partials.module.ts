@@ -11,7 +11,10 @@ import { VisModule } from '../vis/vis.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ParticipantRingComponent } from './participant-ring/participant-ring.component';
 import { ParticipantTableComponent } from './participant-table/participant-table.component';
-import { NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbPopoverModule, NgbTooltip, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import { QrCodeComponent } from './qr-code/qr-code.component';
+import { CopyComponent } from './copy/copy.component';
+import { ClipboardModule } from 'ngx-clipboard';
 
 
 
@@ -22,16 +25,20 @@ import { NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
     FileExporterComponent,
     EditRingOrderComponent,
     ReorderParticipantsComponent,
-    NodeConnectionsComponent
+    NodeConnectionsComponent,
+    QrCodeComponent,
+    CopyComponent
   ],
   providers: [JsonPipe],
   imports: [
     CommonModule,
     NgbPopoverModule,
+    NgbTooltipModule,
     HttpClientModule,
     VisModule,
     FormsModule,
     SharedModule,
+    ClipboardModule,
     DragulaModule.forRoot(),
   ],
   exports: [
@@ -40,7 +47,9 @@ import { NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
     FileExporterComponent,
     EditRingOrderComponent,
     ReorderParticipantsComponent,
-    NodeConnectionsComponent
+    NodeConnectionsComponent,
+    QrCodeComponent,
+    CopyComponent
   ]
 })
 export class PartialsModule { }

@@ -1,133 +1,145 @@
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-md-12 col-lg-4">
-            <form [formGroup]="ringForm" (submit)="saveRingSettings()">
-                <div class="row mb-3">
-                    <label for="ringName" class="col-sm-2 col-form-label">Ringname</label>
-                    <div class="col-sm-10">
-                        <div class="input-group">
-                        <input type="text" class="form-control" formControlName="name" id="ringName"
-                            placeholder="Ring Name" name="ringName">
-                        <button (click)="parseCapacityName()" class="btn btn-secondary" type="button"
-                            id="parseCapacityBtn">Parse capacity</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row mb-3">
-                    <label for="ringSize" class="col-sm-2 col-form-label">Ring size</label>
-                    <div class="col-sm-10">
-                        <input type="number" class="form-control" id="ringSize" placeholder="Ring size"
-                            formControlName="size" name="ringSize">
-                    </div>
-                </div>
-
-                <div class="mb-3">
-                    <label for="pubkeys">Import groupnodes from 🧀 CheeseRobot ₿ <small>(or use <a
-                                href="https://t.me/ringtools_bot" target="_blank">@ringtools_bot</a> command
-                            <code>/ringurl</code>)</small></label>
-                    <textarea class="form-control" id="pubkeys" rows="3" [(ngModel)]="pubkeysText"
-                        [ngModelOptions]="{standalone: true}" spellcheck="false"></textarea>
-                    <button (click)="processGroupnodes()" class="btn btn-primary mb-2" id="importGroupnodesBtn"
-                        type="button">Import Groupnodes</button>
-                </div>
-
-                <div class="form-check form-switch">
-
-                    <input class="form-check-input" type="checkbox" value="" id="showSrRofLogo" [(ngModel)]="showLogo"
-                        (ngModelChange)="updateShowLogo($event)" [ngModelOptions]="{standalone: true}">
-                    <label class="form-check-label" for="showSrRofLogo">
-                        Show SR RoF logo
-                    </label>
-                </div>
-                <div class="form-check form-switch">
-
-                    <input class="form-check-input" type="checkbox" value="" id="useShortChanIds" [(ngModel)]="useShortChannelIds"
-                        (ngModelChange)="updateUseShortChannelIds($event)" [ngModelOptions]="{standalone: true}" disabled>
-                    <label class="form-check-label" for="useShortChanIds">
-                        Use short channel IDs (broken)
-                    </label>
-                </div>
-            </form>
+  <div class="row">
+    <div class="col-md-12 col-lg-4">
+      <form [formGroup]="ringForm" (submit)="saveRingSettings()">
+        <div class="row mb-3">
+          <label for="ringName" class="col-sm-2 col-form-label">{{ 'Settings.RING_NAME' | translate }}</label>
+          <div class="col-sm-10">
+            <div class="input-group">
+              <input type="text" class="form-control" formControlName="name" id="ringName" placeholder="{{ 'Settings.RING_NAME' | translate }}"
+                name="ringName">
+              <button (click)="parseCapacityName()" class="btn btn-secondary" type="button" id="parseCapacityBtn">{{ 'Settings.BTN_PARSE_CAPACITY' | translate }}</button>
+            </div>
+          </div>
         </div>
-        <div class="col-md-12 col-lg-8">
-            <form [formGroup]="nodeForm" (submit)="addNodeOwner()">
-                <table class="table table-sm table-striped small">
-                    <thead>
-                        <tr>
-                            <th colspan="2" scope="col" class="external-services"></th>
-                            <th scope="col">Public Key</th>
-                            <th scope="col">Nodename</th>
-                            <th scope="col">TG username</th>
-                            <th scope="col">&nbsp;</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <ng-container *ngFor="let item of nodeOwners">
-                            <tr>
-                                <td class="service-icon amboss">
-                                    <a [attr.href]="'https://amboss.space/node/' +  item.pub_key" target="_blank">
-                                        <img src="/assets/amboss.png" class="service-icon">
-                                    </a>
-                                </td>
-                                <td class="service-icon 1ml">
-                                    <a [attr.href]="get1MlLink(item)" target="_blank">
-                                        <img src="/assets/1ml.png" class="service-icon">
-                                    </a>
-                                </td>
-                                <td scope="row" class="node_key">
-                                    <span>{{ item.pub_key }}</span>
-                                </td>
-                                <td class="node_name">{{ item.nodename }}</td>
-                                <td>{{ item.username_or_name }}</td>
-                                <td><button class="btn btn-danger btn-small btn-sm delete-btn"
-                                        (click)="removeNodeOwner(item)" name="removeNodeOwnerBtn">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                        </ng-container>
 
-                        <tr>
-                            <th colspan="2">
-                                Manual add
-                            </th>
-
-                            <th scope="row" class="no-padding" colspan="1">
-                                <input class="form-control form-control-sm" type="text" id="pubkey"
-                                    formControlName="pubKey" name="pubKey" placeholder="Public Key">
-                            </th>
-                            <td>{{ tempNodename }}</td>
-                            <td class="no-padding">
-                                <input class="form-control form-control-sm" type="text" id="TG username"
-                                    formControlName="tgUsername" name="tgUsername" placeholder="TG username">
-                            </td>
-                            <td><button class="btn btn-primary btn-small btn-sm" id="addNodeOwnerBtn">Add</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </form>
-            <button (click)="saveRingSettings()" class="btn btn-primary mb-2" name="saveRingSettings"
-                id="saveRingSettings">Save Ring Settings</button>
-            <p *ngIf="shareUrl"><small>copied to clipboard <a [href]="shareUrl">link</a></small></p>
-            <h3>Saved Rings</h3>
-            <ul class="list-group small">
-                <li class="list-group-item d-flex justify-content-between align-items-center small"
-                    *ngFor="let item of ringSettings$ | async">
-                    <span [innerHTML]="emojiPrefix(item)"></span>
-                    <div class="btn-group btn-small small btn-group-toggle" ngbRadioGroup>
-                        <label ngbButtonLabel class="btn-success btn-sm">
-                            <input ngbButton type="radio" value="node" (click)="loadSettings(item)" class="btn-check">
-                            Load
-                        </label>
-                        <label ngbButtonLabel class="btn-danger btn-sm">
-                            <input ngbButton type="radio" value="tg" (click)="removeSettings(item)" class="btn-check">
-                            Remove
-                        </label>
-                    </div>
-                </li>
-            </ul>
+        <div class="row mb-3">
+          <label for="ringSize" class="col-sm-2 col-form-label">{{ 'Settings.RING_SIZE' | translate }}</label>
+          <div class="col-sm-10">
+            <input type="number" class="form-control" id="ringSize" placeholder="{{ 'Settings.RING_SIZE' | translate }}" formControlName="size"
+              name="ringSize">
+          </div>
         </div>
+
+        <div class="mb-3">
+          <label for="pubkeys">Import groupnodes from 🧀 CheeseRobot ₿ <small>(or use <a
+                href="https://t.me/ringtools_bot" target="_blank">@ringtools_bot</a> command
+              <code>/ringurl</code>)</small></label>
+          <textarea class="form-control" id="pubkeys" rows="3" [(ngModel)]="pubkeysText"
+            [ngModelOptions]="{standalone: true}" spellcheck="false"></textarea>
+          <button (click)="processGroupnodes()" class="btn btn-primary mb-2" id="importGroupnodesBtn"
+            type="button">{{ 'Settings.BTN_IMPORT_GROUPNODES' | translate }}</button>
+        </div>
+
+        <div class="form-check form-switch">
+
+          <input class="form-check-input" type="checkbox" value="" id="showSrRofLogo" [(ngModel)]="showLogo"
+            (ngModelChange)="updateShowLogo($event)" [ngModelOptions]="{standalone: true}">
+          <label class="form-check-label" for="showSrRofLogo">
+            Show SR RoF logo
+          </label>
+        </div>
+        <div class="form-check form-switch">
+
+          <input class="form-check-input" type="checkbox" value="" id="useShortChanIds" [(ngModel)]="useShortChannelIds"
+            (ngModelChange)="updateUseShortChannelIds($event)" [ngModelOptions]="{standalone: true}" disabled>
+          <label class="form-check-label" for="useShortChanIds">
+            Use short channel IDs (broken)
+          </label>
+        </div>
+
+        <div class="row mb-3">
+          <label for="languageSelect" class="col-sm-2 col-form-label">{{ 'Settings.LANGUAGE' | translate }}</label>
+          <div class="col-sm-10">
+            <select class="form-select" id="languageSelect" [(ngModel)]="selectedLanguage"
+            (ngModelChange)="updateSelectedLanguage($event)" [ngModelOptions]="{standalone: true}">
+              <option  *ngFor="let locale of locales">{{ locale }}</option>
+            </select>
+          </div>
+        </div>
+
+       
+      </form>
     </div>
+    <div class="col-md-12 col-lg-8">
+      <form [formGroup]="nodeForm" (submit)="addNodeOwner()">
+        <table class="table table-sm table-striped small">
+          <thead>
+            <tr>
+              <th colspan="2" scope="col" class="external-services"></th>
+              <th scope="col">Public Key</th>
+              <th scope="col">Nodename</th>
+              <th scope="col">TG username</th>
+              <th scope="col">&nbsp;</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngFor="let item of nodeOwners">
+              <tr>
+                <td class="service-icon amboss">
+                  <a [attr.href]="'https://amboss.space/node/' +  item.pub_key" target="_blank">
+                    <img src="/assets/amboss.png" class="service-icon">
+                  </a>
+                </td>
+                <td class="service-icon 1ml">
+                  <a [attr.href]="get1MlLink(item)" target="_blank">
+                    <img src="/assets/1ml.png" class="service-icon">
+                  </a>
+                </td>
+                <td scope="row" class="node_key">
+                  <span>{{ item.pub_key }}</span>
+                </td>
+                <td class="node_name">{{ item.nodename }}</td>
+                <td>{{ item.username_or_name }}</td>
+                <td><button class="btn btn-danger btn-small btn-sm delete-btn" (click)="removeNodeOwner(item)"
+                    name="removeNodeOwnerBtn">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                </td>
+              </tr>
+            </ng-container>
+
+            <tr>
+              <th colspan="2">
+                Manual add
+              </th>
+
+              <th scope="row" class="no-padding" colspan="1">
+                <input class="form-control form-control-sm" type="text" id="pubkey" formControlName="pubKey"
+                  name="pubKey" placeholder="Public Key">
+              </th>
+              <td>{{ tempNodename }}</td>
+              <td class="no-padding">
+                <input class="form-control form-control-sm" type="text" id="TG username" formControlName="tgUsername"
+                  name="tgUsername" placeholder="TG username">
+              </td>
+              <td><button class="btn btn-primary btn-small btn-sm" id="addNodeOwnerBtn">{{ 'Settings.BTN_ADD' | translate }}</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+      <button (click)="saveRingSettings()" class="btn btn-primary mb-2" name="saveRingSettings"
+        id="saveRingSettings">{{ 'Settings.BTN_SAVE_RING_SETTINGS' | translate }}</button>
+      <p *ngIf="shareUrl"><small>copied to clipboard <a [href]="shareUrl">link</a></small></p>
+      <h3>{{ 'Settings.SAVED_RINGS' | translate }}</h3>
+      <ul class="list-group small">
+        <li class="list-group-item d-flex justify-content-between align-items-center small"
+          *ngFor="let item of ringSettings$ | async">
+          <span [innerHTML]="emojiPrefix(item)"></span>
+          <div class="btn-group btn-small small btn-group-toggle" ngbRadioGroup>
+            <label ngbButtonLabel class="btn-success btn-sm">
+              <input ngbButton type="radio" value="node" (click)="loadSettings(item)" class="btn-check">
+              {{ 'Settings.BTN_LOAD' | translate }}
+            </label>
+            <label ngbButtonLabel class="btn-danger btn-sm">
+              <input ngbButton type="radio" value="tg" (click)="removeSettings(item)" class="btn-check">
+              {{ 'Settings.BTN_REMOVE' | translate }}
+            </label>
+          </div>
+        </li>
+        <ng-container *ngIf="!(ringSettings$ | async)?.length"><li class="list-group-item d-flex justify-content-between align-items-center small">{{ 'Settings.NO_SAVED_RINGS' | translate }}</li></ng-container>
+      </ul>
+    </div>
+  </div>
 </div>

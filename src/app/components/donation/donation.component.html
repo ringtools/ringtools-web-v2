@@ -1,0 +1,36 @@
+<div class="modal-header">
+  <h4 class="modal-title"><i class="bi bi-currency-bitcoin"></i> Donate</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
+
+</div>
+
+<div class="modal-body">
+  <form [formGroup]="donateForm" (submit)="donateLn()" *ngIf="!lnInvoice">
+    <div class="row mb-3">
+
+      <label for="amount" class="col-sm-3 col-form-label col-form-label-sm">Amount in sats</label>
+      <div class="col-sm-9">
+        <div class="input-group">
+          <input type="number" class="form-control" id="amountSats" formControlName="amountSats" min="0" max="250000">
+          <span class="input-group-text">sats</span>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label for="message" class="col-sm-3 col-form-label col-form-label-sm">Message (optional)</label>
+      <div class="col-sm-9">
+        <textarea class="form-control" id="message" maxlength="80" formControlName="message"></textarea>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-info" [disabled]="!buttonEnabled"><i class="bi bi-lightning"></i> Donate using LN</button>
+  </form>
+  <div class="col-sm text-center" *ngIf="lnInvoice">
+    <p>Thanks for your support!</p>
+    <a [href]="getSafeLnInvoiceUrl()"><app-qr-code [qrData]="getlnInvoiceUrl().toString()"></app-qr-code></a>
+    <app-copy [value]="lnInvoice"></app-copy>
+    <p *ngIf="expiry === 3600">Expires in one hour</p>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary" (click)="activeModal.close('Close click')">Close</button>
+</div>

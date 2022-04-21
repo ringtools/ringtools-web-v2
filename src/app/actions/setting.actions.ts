@@ -40,3 +40,8 @@ export const setUseShortChannelIds = createAction(
   '[Setting] set Use Short Channel IDs',
   (useShortChannelIds: boolean) => ({useShortChannelIds})
 );
+
+export const setLocale = createAction(
+  '[Setting] set locale',
+  (locale: string) => ({locale})
+);

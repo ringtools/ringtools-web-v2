@@ -5,6 +5,7 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { SharedModule } from '../shared/shared.module';
 import { AppRoutingModule } from '../app-routing.module';
 import { NgbCollapseModule, NgbDropdownModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateModule, TranslatePipe } from '@ngx-translate/core';
 
 
 
@@ -19,7 +20,8 @@ import { NgbCollapseModule, NgbDropdownModule, NgbNavModule } from '@ng-bootstra
     SharedModule,
     NgbCollapseModule,
     NgbNavModule,
-    NgbDropdownModule
+    NgbDropdownModule,
+    TranslateModule
   ],
   exports: [
     BaseLayoutComponent, NavigationComponent

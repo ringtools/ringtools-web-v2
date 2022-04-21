@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { setViewMode } from 'src/app/actions/setting.actions';
@@ -16,8 +17,11 @@ import * as fromRoot from '../../reducers';
 export class VisualComponent {
   settings$!: Observable<SettingState>;
   nodeOwners$!: Observable<NodeOwner[]>;
-
   settings!: SettingState;
+
+  viewMode = new FormGroup({
+    viewMode: new FormControl(''),
+  });
 
   constructor(
     private store: Store<fromRoot.State>
@@ -28,6 +32,8 @@ export class VisualComponent {
 
     this.settings$.subscribe((settings: SettingState) => {
       this.settings = settings;
+
+      this.viewMode.setValue({ viewMode: this.settings.viewMode })
     })
   }
 

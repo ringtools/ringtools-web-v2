@@ -7,15 +7,15 @@
 
         <div class="col-md-8 participants">
             <h2>Ring participants
-                <div class="btn-group btn-small small" ngbRadioGroup name="names"
-                    [(ngModel)]="settings.viewMode" (ngModelChange)="viewChange($event)">
-                    <label ngbButtonLabel class="btn-primary btn-sm">
-                        <input ngbButton type="radio" value="node" class="btn-check"> Nodename
-                    </label>
-                    <label ngbButtonLabel class="btn-primary btn-sm">
-                        <input ngbButton type="radio" value="tg" class="btn-check"> TG username
-                    </label>
-                </div>
+              <div class="btn-group btn-small small btn-group-toggle" [formGroup]="viewModeForm">
+
+                <input type="radio" formControlName="viewMode" value="node" class="btn-check" id="nodenameBtn">
+                <label class="btn btn-primary btn-sm" for="nodenameBtn">Nodename</label>
+      
+                <input type="radio" formControlName="viewMode" value="tg" class="btn-check" id="tgnameBtn">
+                <label class="btn btn-primary btn-sm" for="tgnameBtn">TG username
+                </label>
+              </div>
             </h2>
 
             <app-participant-table [participants]="ring"></app-participant-table>

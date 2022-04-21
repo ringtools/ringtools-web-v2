@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { deleteNodeOwner, loadNodeOwners } from 'src/app/actions/node-owner.actions';
 import {
   loadRingSetting,
+  setLocale,
   setRingName,
   setRingSize,
   setShowLogo,
@@ -26,6 +27,7 @@ import { data } from 'vis-network';
 import { deleteRingSetting, upsertRingSetting } from 'src/app/actions/ring-setting.actions';
 import { nodeOwnersReducer } from 'src/app/reducers/node-owner.reducer';
 import { RingDataService } from 'src/app/services/ring-data.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-settings',
@@ -37,6 +39,9 @@ export class SettingsComponent implements OnInit {
   ringSettings: RingSetting[] = [];
   nodeOwners$ = new Observable<NodeOwner[]>();
   nodeOwners: NodeOwner[] = [];
+  selectedLanguage!: string;
+
+  locales = ['en-US', 'nl-NL']
 
   shareUrl: string = '';
   showLogo: boolean = true;
@@ -62,6 +67,7 @@ export class SettingsComponent implements OnInit {
     private notification: NotificationService,
     private route: ActivatedRoute,
     private ringData: RingDataService,
+    private translate: TranslateService,
     private store: Store<fromRoot.State>
   ) {
     this.store.select(selectSettings).subscribe((settings: SettingState) => {
@@ -69,6 +75,8 @@ export class SettingsComponent implements OnInit {
 
       this.showLogo = settings.showLogo;
       this.useShortChannelIds = settings.useShortChannelIds;
+
+      this.selectedLanguage = settings.locale
     });
 
     this.ringSettings$ = this.store.select(selectRingSettings);
@@ -226,5 +234,11 @@ export class SettingsComponent implements OnInit {
   get1MlLink(node: any) {
     let add = environment.networkClass == 'testnet' ? 'testnet/' : '';
     return `https://1ml.com/${add}node/${node.pub_key}`;
+  }
+
+  updateSelectedLanguage($event) {
+    this.translate.use($event);
+
+    this.store.dispatch(setLocale($event));
   }
 }
