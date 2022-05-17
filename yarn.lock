@@ -1906,7 +1906,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.10.2, @babel/runtime@npm:^7.8.4":
+"@babel/runtime@npm:^7.10.2, @babel/runtime@npm:^7.17.9, @babel/runtime@npm:^7.8.4":
   version: 7.17.9
   resolution: "@babel/runtime@npm:7.17.9"
   dependencies:
@@ -10821,6 +10821,7 @@ __metadata:
     "@angular/platform-browser": ~13.3.8
     "@angular/platform-browser-dynamic": ~13.3.8
     "@angular/router": ~13.3.8
+    "@babel/runtime": ^7.17.9
     "@biesbjerg/ngx-translate-extract": ^7.0.4
     "@cypress/schematic": 1.7.0
     "@egjs/hammerjs": ^2.0.17

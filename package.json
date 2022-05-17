@@ -25,6 +25,7 @@
     "@angular/platform-browser": "~13.3.8",
     "@angular/platform-browser-dynamic": "~13.3.8",
     "@angular/router": "~13.3.8",
+    "@babel/runtime": "^7.17.9",
     "@egjs/hammerjs": "^2.0.17",
     "@fontsource/lato": "^4.5.8",
     "@ng-bootstrap/ng-bootstrap": "12.1.1",
