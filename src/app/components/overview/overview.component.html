@@ -6,22 +6,22 @@
         </div>
 
         <div class="col-md-8 participants">
-            <h2>Ring participants
+            <h2 translate>Overview.HEADER
               <div class="btn-group btn-small small btn-group-toggle" [formGroup]="viewModeForm">
 
                 <input type="radio" formControlName="viewMode" value="node" class="btn-check" id="nodenameBtn">
-                <label class="btn btn-primary btn-sm" for="nodenameBtn">Nodename</label>
+                <label class="btn btn-primary btn-sm" for="nodenameBtn" translate>General.NODENAME</label>
       
                 <input type="radio" formControlName="viewMode" value="tg" class="btn-check" id="tgnameBtn">
-                <label class="btn btn-primary btn-sm" for="tgnameBtn">TG username
+                <label class="btn btn-primary btn-sm" for="tgnameBtn" translate>General.TG_USERNAME
                 </label>
               </div>
             </h2>
 
             <app-participant-table [participants]="ring"></app-participant-table>
-            <button (click)="downloadAsPng()" class="btn btn-primary">Download Visual</button>
+            <button (click)="downloadAsPng()" class="btn btn-primary" translate>Overview.DOWNLOAD_VISUAL</button>
             &nbsp;
-            <small>Red channels: Fee policy missing</small>
+            <small translate>Overview.RED_CHANNELS</small>
         </div>
     </div>
 </div>

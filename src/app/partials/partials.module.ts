@@ -15,6 +15,7 @@ import { NgbPopoverModule, NgbTooltip, NgbTooltipModule } from '@ng-bootstrap/ng
 import { QrCodeComponent } from './qr-code/qr-code.component';
 import { CopyComponent } from './copy/copy.component';
 import { ClipboardModule } from 'ngx-clipboard';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 
@@ -39,6 +40,7 @@ import { ClipboardModule } from 'ngx-clipboard';
     FormsModule,
     SharedModule,
     ClipboardModule,
+    TranslateModule,
     DragulaModule.forRoot(),
   ],
   exports: [

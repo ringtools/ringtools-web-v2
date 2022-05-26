@@ -3,15 +3,10 @@
     <div class="col-md-8">
       <h1>{{ 'Home.WELCOME_HEADER' | translate }} <span *ngIf="testnet">for Testnet 🧪 </span></h1>
       <p [innerHTML]="'Home.WELCOME_TEXT' | translate"></p>
-
       <p><span [innerHTML]="'Home.DONATE_TEXT' | translate"></span><a href="#donate" (click)="openDonationModal($event)" translate>Home.DONATE_LINK</a>.</p>
-      <h4>How does this work</h4>
-      <p>
-        Ring Participants and their information (loaded from the CSV) will be stored in your browser
-        (LocalStorage)</p>
-
-
-      <h4>Acknowledgements</h4>
+      <h4 translate>Home.EXPLAIN_HEADER</h4>
+      <p translate>Home.EXPLAIN_TEXT</p>
+      <h4 translate>Home.ACKNOWLEDGEMENTS</h4>
       <ul>
         <li>Based on the work by <a href="https://github.com/StijnBTC/Ringtools" target="_blank">@stijnbtc</a>
         </li>
