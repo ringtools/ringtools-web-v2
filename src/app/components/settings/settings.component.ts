@@ -41,7 +41,7 @@ export class SettingsComponent implements OnInit {
   nodeOwners: NodeOwner[] = [];
   selectedLanguage!: string;
 
-  locales = ['en-US', 'nl-NL']
+  locales = ['en-US', 'nl-NL', 'es-ES']
 
   shareUrl: string = '';
   showLogo: boolean = true;

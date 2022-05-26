@@ -1,0 +1,3 @@
+[submodule "src/assets/translations"]
+	path = src/assets/translations
+	url = https://github.com/ringtools/ringtools-translations/

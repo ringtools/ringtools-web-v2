@@ -14,7 +14,7 @@ import { HttpClient } from '@angular/common/http';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http);
+  return new TranslateHttpLoader(http, './assets/translations/web/', '.json');
 }
 
 @NgModule({
