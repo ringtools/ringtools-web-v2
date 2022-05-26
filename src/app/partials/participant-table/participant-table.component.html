@@ -1,19 +1,19 @@
 <table class="table table-sm table-striped small">
     <thead>
         <tr>
-            <th scope="col">Channel ID</th>
-            <th scope="col">Node 1</th>
-            <th scope="col">Node 2</th>
-            <th scope="col">N1 Base fee</th>
-            <th scope="col">N1 Fee rate</th>
-            <th scope="col">N2 Base fee</th>
-            <th scope="col">N2 Fee rate</th>
+            <th scope="col" translate>Overview.TH_CH_ID</th>
+            <th scope="col"><span translate>Overview.TH_NODE</span> 1</th>
+            <th scope="col"><span translate>Overview.TH_NODE</span> 2</th>
+            <th scope="col">N1 <span translate>Overview.BASE_FEE</span></th>
+            <th scope="col">N1 <span translate>Overview.FEE_RATE</span></th>
+            <th scope="col">N2 <span translate>Overview.BASE_FEE</span></th>
+            <th scope="col">N2 <span translate>Overview.FEE_RATE</span></th>
         </tr>
     </thead>
     <tbody>
         <ng-container *ngFor="let item of participants; let i = index">
             <tr [class.error]="item[2] && (!item[3][0]|| !item[3][1] || item[3][0].disabled === true || item[3][1].disabled === true)">
-                <ng-template #popTitle let-title="title">Node policy <strong>{{title}}</strong></ng-template>
+                <ng-template #popTitle let-title="title"><span translate>Overview.NODE_POLICY</span> <strong>{{title}}</strong></ng-template>
                 <ng-template #popContent let-value="value">
                     <pre><code [innerHTML]="value"></code></pre>
                 </ng-template>

@@ -22,7 +22,7 @@
         </div>
 
         <div class="mb-3">
-          <label for="pubkeys">Import groupnodes from 🧀 CheeseRobot ₿ <small>(or use <a
+          <label for="pubkeys"><span translate>Settings.IMPORT_AREA</span> <small>(or use <a
                 href="https://t.me/ringtools_bot" target="_blank">@ringtools_bot</a> command
               <code>/ringurl</code>)</small></label>
           <textarea class="form-control" id="pubkeys" rows="3" [(ngModel)]="pubkeysText"
@@ -104,12 +104,12 @@
 
               <th scope="row" class="no-padding" colspan="1">
                 <input class="form-control form-control-sm" type="text" id="pubkey" formControlName="pubKey"
-                  name="pubKey" placeholder="Public Key">
+                  name="pubKey" placeholder="{{ 'General.PUBLIC_KEY' | translate }}">
               </th>
               <td>{{ tempNodename }}</td>
               <td class="no-padding">
                 <input class="form-control form-control-sm" type="text" id="TG username" formControlName="tgUsername"
-                  name="tgUsername" placeholder="TG username">
+                  name="tgUsername" placeholder="{{ 'General.TG_USERNAME' | translate }}">
               </td>
               <td><button class="btn btn-primary btn-small btn-sm" id="addNodeOwnerBtn">{{ 'Settings.BTN_ADD' | translate }}</button>
               </td>

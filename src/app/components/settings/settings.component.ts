@@ -89,8 +89,17 @@ export class SettingsComponent implements OnInit {
 
   ngOnInit(): void {
     const loadRingNew = this.route.snapshot.queryParamMap.get('l');
+
+    const langQs = this.route.snapshot.queryParamMap.get('lang');
+
     if (loadRingNew) {
       this.parseLoadQueryString(loadRingNew);
+    }
+
+    console.log(langQs)
+    if (langQs && this.locales.includes(langQs)) {
+      this.translate.use(langQs)
+      this.store.dispatch(setLocale(langQs));
     }
   }
 
