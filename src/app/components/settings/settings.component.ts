@@ -99,7 +99,6 @@ export class SettingsComponent implements OnInit {
       this.parseLoadQueryString(loadRingNew);
     }
 
-    console.log(langQs)
     if (langQs && this.locales.includes(langQs)) {
       this.translate.use(langQs)
       this.store.dispatch(setLocale(langQs));
