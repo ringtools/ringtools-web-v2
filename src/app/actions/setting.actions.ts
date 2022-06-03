@@ -41,6 +41,11 @@ export const setUseShortChannelIds = createAction(
   (useShortChannelIds: boolean) => ({useShortChannelIds})
 );
 
+export const setAdvancedView = createAction(
+  '[Setting] set Advanced View',
+  (advancedView: boolean) => ({advancedView})
+);
+
 export const setLocale = createAction(
   '[Setting] set locale',
   (locale: string) => ({locale})

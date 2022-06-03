@@ -10,6 +10,7 @@ export interface SettingState {
   viewMode: string
   showLogo: boolean
   useShortChannelIds: boolean
+  advancedView: boolean
   locale: string
   ringLeader?: NodeOwner
 }
@@ -19,6 +20,7 @@ export const initialSettingState: SettingState = {
   viewMode: 'tg',
   showLogo: false,
   useShortChannelIds: false,
+  advancedView: false,
   locale: 'en-US',
   ringSize: 0
 };
@@ -27,11 +29,11 @@ export const settingReducer = createReducer(
   initialSettingState,
   on(SettingActions.setRingName, 
     (state: SettingState, {ringName}) => {
-      return {...state, ringName: ringName }
+      return {...state, ringName }
   }),
   on(SettingActions.setRingLeader, 
     (state: SettingState, {ringLeader}) => {
-      return {...state, ringLeader: ringLeader }
+      return {...state, ringLeader }
   }),
   on(SettingActions.setRingSize, 
     (state: SettingState, {ringSize}) => {
@@ -39,15 +41,19 @@ export const settingReducer = createReducer(
   }),
   on(SettingActions.setViewMode, 
     (state: SettingState, {viewMode}) => {
-      return {...state, viewMode: viewMode }
+      return {...state, viewMode }
   }),
   on(SettingActions.setShowLogo, 
     (state: SettingState, {showLogo}) => {
-      return {...state, showLogo: showLogo }
+      return {...state, showLogo }
   }),
   on(SettingActions.setUseShortChannelIds, 
     (state: SettingState, {useShortChannelIds}) => {
-      return {...state, useShortChannelIds: useShortChannelIds }
+      return {...state, useShortChannelIds }
+  }),
+  on(SettingActions.setAdvancedView, 
+    (state: SettingState, {advancedView}) => {
+      return {...state, advancedView }
   }),
   on(SettingActions.setLocale, 
     (state: SettingState, {locale}) => {

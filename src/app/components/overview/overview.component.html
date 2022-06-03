@@ -20,8 +20,10 @@
 
             <app-participant-table [participants]="ring"></app-participant-table>
             <button (click)="downloadAsPng()" class="btn btn-primary" translate>Overview.DOWNLOAD_VISUAL</button>
-            &nbsp;
-            <small translate>Overview.RED_CHANNELS</small>
+            <br>
+            <small translate>Overview.RED_CHANNELS</small><br>
+            <small translate *ngIf="settings.advancedView">Overview.MIN_MAX_HTLC_IN_SATS</small>
+            
         </div>
     </div>
 </div>

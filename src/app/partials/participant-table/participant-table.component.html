@@ -6,19 +6,25 @@
             <th scope="col"><span translate>Overview.TH_NODE</span> 2</th>
             <th scope="col">N1 <span translate>Overview.BASE_FEE</span></th>
             <th scope="col">N1 <span translate>Overview.FEE_RATE</span></th>
+            <th scope="col" *ngIf="settings.advancedView">N1 <span translate>Overview.MIN_MAX_HTLC</span></th>
             <th scope="col">N2 <span translate>Overview.BASE_FEE</span></th>
             <th scope="col">N2 <span translate>Overview.FEE_RATE</span></th>
+            <th scope="col" *ngIf="settings.advancedView">N2 <span translate>Overview.MIN_MAX_HTLC</span></th>
         </tr>
     </thead>
     <tbody>
         <ng-container *ngFor="let item of participants; let i = index">
-            <tr [class.error]="item[2] && (!item[3][0]|| !item[3][1] || item[3][0].disabled === true || item[3][1].disabled === true)">
-                <ng-template #popTitle let-title="title"><span translate>Overview.NODE_POLICY</span> <strong>{{title}}</strong></ng-template>
+            <tr
+                [class.error]="item[2] && (!item[3][0]|| !item[3][1] || item[3][0].disabled === true || item[3][1].disabled === true)">
+                <ng-template #popTitle let-title="title"><span translate>Overview.NODE_POLICY</span>
+                    <strong>{{title}}</strong>
+                </ng-template>
                 <ng-template #popContent let-value="value">
                     <pre><code [innerHTML]="value"></code></pre>
                 </ng-template>
 
-                <th scope="row" [style.background-color]="getColor(i)" class="channelCol">{{ getChannelId(item[2]) }}</th>
+                <th scope="row" [style.background-color]="getColor(i)" class="channelCol">{{ getChannelId(item[2]) }}
+                </th>
                 <ng-template [ngIf]="settings.viewMode === 'tg'" [ngIfElse]="elseBlock">
                     <td *ngIf="item[0]">{{ item[0].username_or_name }}</td>
                     <td *ngIf="item[1]">{{ item[1].username_or_name }}</td>
@@ -30,22 +36,35 @@
                 <td [class.error]="item[3] && item[3][0] && item[3][0].disabled === true">
                     <div *ngIf="item[3] && item[3][0]" [ngbPopover]="popContent" [popoverTitle]="popTitle"
                         #p1="ngbPopover" triggers="manual" (click)="routingPolicyPopover(p1, item[3][0], item[0])">
-                        <span>{{ item[3][0].fee_base_msat }}</span></div>
+                        <span>{{ item[3][0].fee_base_msat }}</span>
+                    </div>
                 </td>
                 <td [class.error]="item[3] && item[3][0] && item[3][0].disabled === true">
                     <div *ngIf="item[3] && item[3][0]" [ngbPopover]="popContent" [popoverTitle]="popTitle"
                         #p1="ngbPopover" triggers="manual" (click)="routingPolicyPopover(p1, item[3][0], item[0])">
-                        <span>{{ item[3][0].fee_rate_milli_msat }}</span></div>
+                        <span>{{ item[3][0].fee_rate_milli_msat }}</span>
+                    </div>
+                </td>
+                <td *ngIf="settings.advancedView && item[3] && item[3][0]">
+                    <span>{{ item[3][0].min_htlc / 1000 }} / {{ item[3][0].max_htlc_msat / 1000 }}</span>
+                </td>
+         
+                <td [class.error]="item[3] && item[3][1] && item[3][1].disabled === true">
+                    <div *ngIf="item[3] && item[3][1]" [ngbPopover]="popContent" [popoverTitle]="popTitle"
+                        #p1="ngbPopover" triggers="manual" (click)="routingPolicyPopover(p1, item[3][1], item[1])">
+                        <span>{{ item[3][1].fee_base_msat }}</span>
+                    </div>
                 </td>
                 <td [class.error]="item[3] && item[3][1] && item[3][1].disabled === true">
                     <div *ngIf="item[3] && item[3][1]" [ngbPopover]="popContent" [popoverTitle]="popTitle"
                         #p1="ngbPopover" triggers="manual" (click)="routingPolicyPopover(p1, item[3][1], item[1])">
-                        <span>{{ item[3][1].fee_base_msat }}</span></div>
+                        <span>{{ item[3][1].fee_rate_milli_msat }}</span>
+                    </div>
                 </td>
-                <td [class.error]="item[3] && item[3][1] && item[3][1].disabled === true">
-                    <div *ngIf="item[3] && item[3][1]" [ngbPopover]="popContent" [popoverTitle]="popTitle"
-                        #p1="ngbPopover" triggers="manual" (click)="routingPolicyPopover(p1, item[3][1], item[1])">
-                        <span>{{ item[3][1].fee_rate_milli_msat }}</span></div>
+                <td *ngIf="settings.advancedView && item[3] && item[3][1]">
+                    <span>{{ item[3][1].min_htlc / 1000 }} / {{ item[3][1].max_htlc_msat / 1000 }}</span>
+                </td>
+
             </tr>
         </ng-container>
     </tbody>

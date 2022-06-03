@@ -35,16 +35,24 @@
 
           <input class="form-check-input" type="checkbox" value="" id="showSrRofLogo" [(ngModel)]="showLogo"
             (ngModelChange)="updateShowLogo($event)" [ngModelOptions]="{standalone: true}">
-          <label class="form-check-label" for="showSrRofLogo">
-            Show SR RoF logo
+          <label class="form-check-label" for="showSrRofLogo" translate>
+            Settings.TOGGLE_SHOW_LOGO
           </label>
         </div>
         <div class="form-check form-switch">
 
           <input class="form-check-input" type="checkbox" value="" id="useShortChanIds" [(ngModel)]="useShortChannelIds"
             (ngModelChange)="updateUseShortChannelIds($event)" [ngModelOptions]="{standalone: true}" disabled>
-          <label class="form-check-label" for="useShortChanIds">
-            Use short channel IDs (broken)
+          <label class="form-check-label" for="useShortChanIds" translate>
+            Settings.TOGGLE_USE_SHORT_CHANID
+          </label>
+        </div>
+
+        <div class="form-check form-switch">
+          <input class="form-check-input" type="checkbox" value="" id="advancedView" [(ngModel)]="advancedView"
+            (ngModelChange)="updateAdvancedView($event)" [ngModelOptions]="{standalone: true}" >
+          <label class="form-check-label" for="advancedView" translate>
+            Settings.TOGGLE_SHOW_ADVANCED
           </label>
         </div>
 

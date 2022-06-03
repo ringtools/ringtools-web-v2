@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { deleteNodeOwner, loadNodeOwners } from 'src/app/actions/node-owner.actions';
 import {
   loadRingSetting,
+  setAdvancedView,
   setLocale,
   setRingName,
   setRingSize,
@@ -46,6 +47,7 @@ export class SettingsComponent implements OnInit {
   shareUrl: string = '';
   showLogo: boolean = true;
   useShortChannelIds: boolean = false;
+  advancedView: boolean = false;
 
   settings!: SettingState;
 
@@ -75,6 +77,7 @@ export class SettingsComponent implements OnInit {
 
       this.showLogo = settings.showLogo;
       this.useShortChannelIds = settings.useShortChannelIds;
+      this.advancedView = settings.advancedView
 
       this.selectedLanguage = settings.locale
     });
@@ -236,6 +239,10 @@ export class SettingsComponent implements OnInit {
 
   updateUseShortChannelIds(event: any) {
     this.store.dispatch(setUseShortChannelIds(event));
+  }
+
+  updateAdvancedView(event: any) {
+    this.store.dispatch(setAdvancedView(event));
   }
 
   processRingname() {}
