@@ -13,6 +13,7 @@ import { RingOnlyComponent } from './ring-only/ring-only.component';
 import { DonationComponent } from './donation/donation.component';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
+import { LoginComponent } from './login/login.component';
 
 
 
@@ -23,7 +24,8 @@ import { TranslateModule } from '@ngx-translate/core';
     SettingsComponent,
     VisualComponent,
     RingOnlyComponent,
-    DonationComponent
+    DonationComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

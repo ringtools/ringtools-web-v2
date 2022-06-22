@@ -14,6 +14,8 @@ import { selectNodeOwners } from 'src/app/selectors/node-owner.selectors';
 import { selectSettings } from 'src/app/selectors/setting.selectors';
 import { LnDataService } from 'src/app/services/ln-data.service';
 import * as fromRoot from '../../reducers';
+import { NodeInfo as NodeInfoLnd } from '@lightninglabs/lnc-web/dist/types/proto/lnrpc';
+import { ChannelEdge as ChannelEdgeLnd } from '@lightninglabs/lnc-web/dist/types/proto/lnrpc';
 
 @Component({
   selector: 'app-overview',
@@ -31,6 +33,8 @@ export class OverviewComponent implements OnDestroy {
   viewModeForm = new FormGroup({
     viewMode: new FormControl(''),
   });
+
+  connected = false
   
   constructor(
     private store: Store<fromRoot.State>,
@@ -42,52 +46,74 @@ export class OverviewComponent implements OnDestroy {
     this.settings$.subscribe((settings: SettingState) => {
       this.settings = settings;
       this.viewMode = settings.viewMode;
+
       this.viewModeForm.setValue({ viewMode: this.settings.viewMode });
     });
+
+    lnData.emitter.on('connected', () => {
+      this.connected = true
+      this.onConnected()
+    })
+
+
+    if (lnData.lncIsConnected) {
+      this.connected = true
+      this.onConnected()
+    } else {
+      lnData.emitter.on('connected', () => {
+        this.connected = true
+        this.onConnected()
+      })
+    }
 
     this.viewModeForm.valueChanges.subscribe((e) => {
       this.viewChange(e);
     })
 
+
+  }
+
+  onConnected(): void {
     this.sub.add(
       this.nodeOwners$.subscribe((nodeOwners: NodeOwner[]) => {
-        this.lnData.nodeSocket.emit(
-          'subscribe',
+        this.lnData.emitter.emit(
+          'subscribe_node',
           nodeOwners.map((no) => no.pub_key)
         );
 
         this.ring = this.makeRing(nodeOwners);
+
       })
     );
 
-    this.lnData.nodeSocket.on('node', (data: NodeInfo) => {
+    this.lnData.emitter.on('node', (data: NodeInfoLnd) => {
       this.store.dispatch(upsertNodeInfo({ nodeInfo: data }));
-
-      this.nodeData.set(data.node.pub_key, Object.assign(new NodeInfo(), data));
+      if (!data.node) return
+      this.nodeData.set(data.node?.pubKey, Object.assign(new NodeInfo(), data));
       this.refreshRing();
 
       const channelIds = this.ring.map((r) => r[2]).filter((r) => r != null);
 
       if (channelIds.length) {
-        this.lnData.channelSocket.emit('subscribe', channelIds);
+        this.lnData.emitter.emit('subscribe_channel', channelIds);
       }
     });
 
-    this.lnData.channelSocket.on('channel', (data: ChannelEdge) => {
-      let node1 = this.nodeData.get(data.node1_pub)
-      let channelIndex1 = node1?.channels.findIndex(c => c.channel_id == data.channel_id)
+    this.lnData.emitter.on('channel', (data: ChannelEdgeLnd) => {
+      let node1 = this.nodeData.get(data.node1Pub)
+      let channelIndex1 = node1?.channels.findIndex(c => c.channelId == data.channelId)
       if (node1 && channelIndex1) {
         node1.channels = [...node1.channels];
         node1.channels[channelIndex1] = data;
-        this.nodeData.set(data.node1_pub, node1);
+        this.nodeData.set(data.node1Pub, node1);
       }
 
-      let node2 = this.nodeData.get(data.node2_pub)
-      let channelIndex2 = node2?.channels.findIndex(c => c.channel_id == data.channel_id)
+      let node2 = this.nodeData.get(data.node2Pub)
+      let channelIndex2 = node2?.channels.findIndex(c => c.channelId == data.channelId)
       if (node2 && channelIndex2) {
         node2.channels = [...node2.channels];
         node2.channels[channelIndex2] = data;
-        this.nodeData.set(data.node2_pub, node2);
+        this.nodeData.set(data.node2Pub, node2);
       }
 
       this.refreshRing();
@@ -95,8 +121,8 @@ export class OverviewComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.lnData.nodeSocket.emit('unsubscribe_all');
-    this.lnData.channelSocket.emit('unsubscribe_all');
+//    this.lnData.nodeSocket?.emit('unsubscribe_all');
+//    this.lnData.channelSocket?.emit('unsubscribe_all');
     this.sub.unsubscribe();
   }
 
@@ -129,15 +155,13 @@ export class OverviewComponent implements OnDestroy {
         .get(ringParticipants[i].pub_key)
         ?.hasChannelWith(ringParticipants[nextIndex].pub_key);
 
+      let c2 = channel ? this.nodeData.get(ringParticipants[i].pub_key)?.getChannelPolicies(ringParticipants[nextIndex].pub_key, channel) : undefined
+
       ring.push([
         Object.assign(new NodeOwner(), ringParticipants[i]),
         Object.assign(new NodeOwner(), ringParticipants[nextIndex]),
         channel,
-        channel
-          ? this.nodeData
-              .get(ringParticipants[i].pub_key)
-              ?.getChannelPolicies(ringParticipants[nextIndex].pub_key, channel)
-          : undefined,
+        c2
       ]);
     }
 

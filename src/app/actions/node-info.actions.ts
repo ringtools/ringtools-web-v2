@@ -1,7 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 import { Update } from '@ngrx/entity';
 
-import { NodeInfo } from '../models/node-info.model';
+import { NodeInfo } from '@lightninglabs/lnc-web/dist/types/proto/lnrpc';
 
 export const loadNodeInfos = createAction(
   '[NodeInfo/API] Load NodeInfos', 

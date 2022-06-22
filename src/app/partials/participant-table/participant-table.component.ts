@@ -75,7 +75,7 @@ export class ParticipantTableComponent {
     }
   }
 
-  getChannelId(channelId: number) {
+  getChannelId(channelId: string) {
     if (!channelId) return;
     // FIXME bolt07 package doesn't work correctly with browser buffer implementation
 

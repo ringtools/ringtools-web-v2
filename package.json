@@ -28,6 +28,7 @@
     "@babel/runtime": "^7.18.3",
     "@egjs/hammerjs": "^2.0.17",
     "@fontsource/lato": "^4.5.8",
+    "@lightninglabs/lnc-web": "^0.0.1-alpha.rc2",
     "@ng-bootstrap/ng-bootstrap": "12.1.2",
     "@ngrx/entity": "^13.2.0",
     "@ngrx/store": "^13.2.0",

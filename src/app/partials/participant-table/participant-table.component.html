@@ -36,33 +36,33 @@
                 <td [class.error]="item[3] && item[3][0] && item[3][0].disabled === true">
                     <div *ngIf="item[3] && item[3][0]" [ngbPopover]="popContent" [popoverTitle]="popTitle"
                         #p1="ngbPopover" triggers="manual" (click)="routingPolicyPopover(p1, item[3][0], item[0])">
-                        <span>{{ item[3][0].fee_base_msat }}</span>
+                        <span>{{ item[3][0].feeBaseMsat }}</span>
                     </div>
                 </td>
                 <td [class.error]="item[3] && item[3][0] && item[3][0].disabled === true">
                     <div *ngIf="item[3] && item[3][0]" [ngbPopover]="popContent" [popoverTitle]="popTitle"
                         #p1="ngbPopover" triggers="manual" (click)="routingPolicyPopover(p1, item[3][0], item[0])">
-                        <span>{{ item[3][0].fee_rate_milli_msat }}</span>
+                        <span>{{ item[3][0].feeRateMilliMsat }}</span>
                     </div>
                 </td>
                 <td *ngIf="settings.advancedView && item[3] && item[3][0]">
-                    <span>{{ item[3][0].min_htlc / 1000 }} / {{ item[3][0].max_htlc_msat / 1000 }}</span>
+                    <span>{{ item[3][0].minHtlc / 1000 }} / {{ item[3][0].maxHtlcMsat / 1000 }}</span>
                 </td>
          
                 <td [class.error]="item[3] && item[3][1] && item[3][1].disabled === true">
                     <div *ngIf="item[3] && item[3][1]" [ngbPopover]="popContent" [popoverTitle]="popTitle"
                         #p1="ngbPopover" triggers="manual" (click)="routingPolicyPopover(p1, item[3][1], item[1])">
-                        <span>{{ item[3][1].fee_base_msat }}</span>
+                        <span>{{ item[3][1].feeBaseMsat }}</span>
                     </div>
                 </td>
                 <td [class.error]="item[3] && item[3][1] && item[3][1].disabled === true">
                     <div *ngIf="item[3] && item[3][1]" [ngbPopover]="popContent" [popoverTitle]="popTitle"
                         #p1="ngbPopover" triggers="manual" (click)="routingPolicyPopover(p1, item[3][1], item[1])">
-                        <span>{{ item[3][1].fee_rate_milli_msat }}</span>
+                        <span>{{ item[3][1].feeRateMilliMsat }}</span>
                     </div>
                 </td>
                 <td *ngIf="settings.advancedView && item[3] && item[3][1]">
-                    <span>{{ item[3][1].min_htlc / 1000 }} / {{ item[3][1].max_htlc_msat / 1000 }}</span>
+                    <span>{{ item[3][1].minHtlc / 1000 }} / {{ item[3][1].maxHtlcMsat / 1000 }}</span>
                 </td>
 
             </tr>

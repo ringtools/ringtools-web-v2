@@ -50,3 +50,8 @@ export const setLocale = createAction(
   '[Setting] set locale',
   (locale: string) => ({locale})
 );
+
+export const setUseLnc = createAction(
+  '[Setting] set Use LNC',
+  (useLnc: boolean) => ({useLnc})
+);

@@ -12,6 +12,8 @@ import { RingSetting } from 'src/app/models/ring-setting.model';
 import { loadNodeOwners } from 'src/app/actions/node-owner.actions';
 import { loadRingSetting } from 'src/app/actions/setting.actions';
 import { TranslateService } from '@ngx-translate/core';
+import { LnDataService } from 'src/app/services/ln-data.service';
+import { GetInfoResponse } from '@lightninglabs/lnc-web/dist/types/proto/lnrpc';
 
 @Component({
   selector: 'app-navigation',
@@ -24,6 +26,8 @@ export class NavigationComponent {
 
   ringSettings$ = new Observable<RingSetting[]>();
   settings!: SettingState;
+  lncIsConnected!: boolean;
+  lncNodeInfo!: GetInfoResponse;
 
   links = [
     { title: `Pages.HOME`, route: '' },
@@ -36,14 +40,18 @@ export class NavigationComponent {
     private router: Router,
     public route: ActivatedRoute,
     private store: Store<fromRoot.State>,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private lnData: LnDataService
   ) { 
     this.store.select(selectSettings).subscribe((settings: SettingState) => {
       this.settings = settings;
-
       this.translate.use(this.settings.locale)
     });
 
+    this.lnData.emitter.on('connected', (data) => {
+      this.lncIsConnected = lnData.lncIsConnected
+      this.lncNodeInfo = data
+    })
     this.ringSettings$ = this.store.select(selectRingSettings);
 
   }

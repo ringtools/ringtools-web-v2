@@ -15,6 +15,7 @@ import {
   VisNetworkService,
 } from 'src/app/vis/vis.module';
 import * as fromRoot from '../../reducers';
+import { NodeInfo as NodeInfoLnd } from '@lightninglabs/lnc-web/dist/types/proto/lnrpc';
 
 @Component({
   selector: 'app-node-connections',
@@ -78,7 +79,7 @@ export class NodeConnectionsComponent implements OnInit {
   buildNodes() {
     for (let node of this.nodeOwners) {
       let data = this.lnData.getNodeInfo(node.pub_key).subscribe({
-        next: (data: NodeInfo) => {
+        next: (data: NodeInfoLnd) => {
           let label;
 
           //if (this.viewMode == 'node') {
@@ -88,23 +89,23 @@ export class NodeConnectionsComponent implements OnInit {
           // }
 
           let nodeInfo: Node = {
-            id: data.node.pub_key,
-            color: data.node.color,
-            label: data.node.alias,
+            id: data.node?.pubKey,
+            color: data.node?.color,
+            label: data.node?.alias,
           };
 
           this.nodes.add(nodeInfo);
 
           channelloop: for (let edge of data.channels) {
-            if (!this.edges.get(edge.channel_id)) {
+            if (!this.edges.get(edge.channelId)) {
               let e: any = {
-                id: edge.channel_id,
-                from: edge.node1_pub,
-                to: edge.node2_pub,
+                id: edge.channelId,
+                from: edge.node1Pub,
+                to: edge.node2Pub,
                 dashes: true,
               };
 
-              if (!edge.node1_policy || !edge.node2_policy) {
+              if (!edge.node1Policy || !edge.node2Policy) {
                 e.label = 'no info';
                 e.color = '#ffcc00';
               }

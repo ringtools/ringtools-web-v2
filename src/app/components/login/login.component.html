@@ -1,0 +1,40 @@
+<div class="text-center">
+    <form class="form-login shadow-sm p-3 mb-5 rounded" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="row justify-content-md-center">
+            <div class="col-md-4 d-flex">
+                <img src="/assets/logo.svg" alt="Ringtools-Web" height="200px" class="align-self-center">
+            </div>
+            <div class="col-md-8 col-login">
+                <label for="inputPassword" class="sr-only">Password</label>
+                <input type="password" id="inputPassword" class="form-control form-control-lg" placeholder="Password"
+                    required formControlName="password">
+                <label for="inputPassphrase" class="sr-only">LNC Passphrase</label>
+                <input type="password" id="inputPassphrase" class="form-control form-control-lg"
+                    placeholder="LNC Passphrase" required [attr.disabled]="hasStoredPassphrase() ? 'disabled' : null"
+                    formControlName="lncPassphrase">
+
+                <button class="btn btn-lg btn-primary btn-block" type="submit" required
+                    [attr.disabled]="connecting ? 'disabled' : null">Connect</button>
+                <button class="btn btn-lg btn-warning btn-block" type="button" required
+                    [attr.disabled]="connecting ? 'disabled' : null" (click)="clearPassphrase()">Reset</button>
+                <div *ngIf="connecting">
+                    <div class="spinner-border spinner-border-sm text-success" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                <small>&nbsp;Connecting to your node using LNC, please wait. You will be redirected automatically.</small>
+                <hr>
+                </div>
+                <p *ngIf="!hasStoredPassphrase()" class="mt-4">
+                    <small>This instance of RingTools can connect to your own node using a LNC passphrase. Create a
+                        passphrase in LiT and paste it above. A password of your choice will encrypt the passphrase in
+                        your browser.</small>
+                </p>
+                <p>
+                    <small>LNC-web is still new, if your passphrase is wrong or to short it does not give an error. If
+                        it takes longer than 30 seconds to log in, please click the Reset-button and try again.</small>
+                </p>
+            </div>
+        </div>
+
+    </form>
+</div>

@@ -13,6 +13,8 @@ export interface SettingState {
   advancedView: boolean
   locale: string
   ringLeader?: NodeOwner
+  useLnc: boolean
+  lncConnected: boolean
 }
 
 export const initialSettingState: SettingState = {
@@ -22,7 +24,9 @@ export const initialSettingState: SettingState = {
   useShortChannelIds: false,
   advancedView: false,
   locale: 'en-US',
-  ringSize: 0
+  ringSize: 0,
+  useLnc: true,
+  lncConnected: false
 };
 
 export const settingReducer = createReducer(
@@ -58,6 +62,10 @@ export const settingReducer = createReducer(
   on(SettingActions.setLocale, 
     (state: SettingState, {locale}) => {
       return {...state, locale }
+  }),
+  on(SettingActions.setUseLnc, 
+    (state: SettingState, {useLnc}) => {
+      return {...state, useLnc }
   }),
 );
 

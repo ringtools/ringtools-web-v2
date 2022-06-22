@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid" *ngIf="connected">
     <div class="row">
         <div class="col-md-4 chart-container d-inline-block" id="circle" *ngIf="ring !== undefined">
             <app-participant-ring class="w-100 h-100 d-flex" [ringName]="settings.ringName"
@@ -26,4 +26,9 @@
             
         </div>
     </div>
+</div>
+<div class="container-fluid" *ngIf="!connected">
+  <div class="row">
+    <p>Not connected to node. Please wait.</p>
+  </div>
 </div>

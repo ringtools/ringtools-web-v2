@@ -1,39 +1,46 @@
 import { ChannelEdge } from './channel_edge.model';
-import { LightningNode } from './lightning_node.model';
-import { RoutingPolicy } from './routing_policy.model';
+//import { LightningNode } from './lightning_node.model';
+//import { RoutingPolicy } from './routing_policy.model';
+import { LightningNode, NodeInfo as NodeInfoLnd } from '@lightninglabs/lnc-web/dist/types/proto/lnrpc';
+import { RoutingPolicy, ChannelEdge as ChannelEdgeLnd } from '@lightninglabs/lnc-web/dist/types/proto/lnrpc';
 
-export class NodeInfo {
-  node!: LightningNode;
-  channels!: ChannelEdge[];
-  total_capacity?: string;
+export class NodeInfo implements NodeInfoLnd {
+  node!: LightningNode | undefined;
+ // node: LightningNode | undefined;
+  numChannels!: number;
+  totalCapacity!: string;
+  channels!: ChannelEdgeLnd[];
+  // node!: LightningNode;
+  // channels!: ChannelEdge[];
+  // total_capacity?: string;
 
   get id(): string {
-    return this.node?.pub_key;
+    return this.node?.pubKey || '';
   }
 
   hasChannelWith(pub_key: string | undefined) {
-    let hasChannel: number | null = null;
+    let hasChannel: string | null = null;
 
     for (let edge of this.channels) {
-      if (edge.node1_pub == pub_key || edge.node2_pub == pub_key) {
-        hasChannel = edge.channel_id;
+      if (edge.node1Pub == pub_key || edge.node2Pub == pub_key) {
+        hasChannel = edge.channelId;
       }
     }
 
     return hasChannel;
   }
 
-  getChannelPolicies(pub_key: string, channelId: number) {
-    let ret:[RoutingPolicy, RoutingPolicy] | undefined;
+  getChannelPolicies(pub_key: string, channelId: string) {
+    let ret:[RoutingPolicy | undefined, RoutingPolicy | undefined] | undefined;
 
-    const edge = this.channels.find((c) => c.channel_id == channelId);
+    const edge = this.channels.find((c) => c.channelId == channelId);
 
     if (!edge) return;
 
-    if (edge.node1_pub == pub_key) {
-      ret = [edge.node2_policy, edge.node1_policy];
-    } else if (edge.node2_pub == pub_key) {
-      ret = [edge.node1_policy, edge.node2_policy];
+    if (edge.node1Pub == pub_key) {
+      ret = [edge.node2Policy, edge.node1Policy];
+    } else if (edge.node2Pub == pub_key) {
+      ret = [edge.node1Policy, edge.node2Policy];
     }
     return ret;
   }

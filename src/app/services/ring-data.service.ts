@@ -12,6 +12,7 @@ import { NodeOwner } from '../models/node-owner.model';
 import { IRing } from '../models/ring.model';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { selectNodeOwners } from '../selectors/node-owner.selectors';
+import { NodeInfo as NodeInfoLnd } from '@lightninglabs/lnc-web/dist/types/proto/lnrpc';
 
 @Injectable({
   providedIn: 'root',
@@ -50,10 +51,10 @@ export class RingDataService {
   }
 
   addNodeOwner(pubKey: string, tgUsername: string) {
-    this.lnData.getNodeInfo(pubKey).subscribe((nodeInfo: NodeInfo) => {
+    this.lnData.getNodeInfo(pubKey).subscribe((nodeInfo: NodeInfoLnd) => {
       let no: NodeOwner = {
-        pub_key: nodeInfo.node.pub_key,
-        nodename: nodeInfo.node.alias,
+        pub_key: nodeInfo.node?.pubKey || '',
+        nodename: nodeInfo.node?.alias || '',
         first_name: tgUsername,
         username: tgUsername,
         username_or_name: '',
