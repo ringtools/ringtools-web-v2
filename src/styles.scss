@@ -10,6 +10,6 @@
 @import 'style/dragula.scss';
 @import "~highlight.js/styles/github-dark.css";
 
-.ng-invalid {
+.ng-invalid:not(.ng-untouched) {
   @extend .is-invalid;
 }

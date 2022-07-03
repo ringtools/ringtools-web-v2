@@ -38,6 +38,11 @@ export class LnDataService {
 
     let prom = this.lnc.connect();
     
+    prom.catch((e) => {
+      this.lnc.disconnect()
+      throw Error(e)
+    })
+
     prom.then(() => {
       this.lncIsConnected = true
 

@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
+import { debug } from 'console';
 import { SettingState } from 'src/app/reducers/setting.reducer';
 import { selectSettings } from 'src/app/selectors/setting.selectors';
 import { LnDataService } from 'src/app/services/ln-data.service';
@@ -54,21 +55,33 @@ export class LoginComponent {
         } else {
           this.router.navigate([''])
         }
-      }).catch(() => {
+      }).catch((e) => {
         this.connecting = false
 
-        console.log('LNC error')
+        console.log('LNC error', e)
         this.loginForm.setErrors({
           invalid: true,
+          message: e
         })
       })
 
     } catch (e) {
       this.connecting = false
-      this.loginForm.setErrors({
-        invalid: true,
-      })
-      console.log('err', e)
+
+
+      if (String((e as any).message).includes('password provided is not valid')) {
+        console.log('st')
+        this.loginForm.controls['password'].setErrors({
+          invalid: true,
+          message: (e as any).message
+        })
+      } else {
+        this.loginForm.setErrors({
+          invalid: true
+        })
+      }
+
+      console.log('err', e, typeof e)
     }
   }
 

@@ -5,9 +5,17 @@
                 <img src="/assets/logo.svg" alt="Ringtools-Web" height="200px" class="align-self-center">
             </div>
             <div class="col-md-8 col-login">
+                <div *ngIf="loginForm.errors" class="cross-validation-error-message alert alert-danger">
+                    {{ loginForm.errors['message'] }}
+                </div>
+
                 <label for="inputPassword" class="sr-only">Password</label>
                 <input type="password" id="inputPassword" class="form-control form-control-lg" placeholder="Password"
                     required formControlName="password">
+                    <div class="invalid-feedback" >
+                        <span *ngIf="!loginForm.get('password')?.untouched && loginForm.get('password')?.invalid">Password invalid</span>
+                    </div>
+
                 <label for="inputPassphrase" class="sr-only">LNC Passphrase</label>
                 <input type="password" id="inputPassphrase" class="form-control form-control-lg"
                     placeholder="LNC Passphrase" required [attr.disabled]="hasStoredPassphrase() ? 'disabled' : null"
@@ -30,8 +38,7 @@
                         your browser.</small>
                 </p>
                 <p>
-                    <small>LNC-web is still new, if your passphrase is wrong or to short it does not give an error. If
-                        it takes longer than 30 seconds to log in, please click the Reset-button and try again.</small>
+                    <small>LNC-web is still new. If it takes longer than 30 seconds to log in, please click the Reset-button and try again.</small>
                 </p>
             </div>
         </div>
