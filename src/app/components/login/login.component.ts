@@ -68,9 +68,7 @@ export class LoginComponent {
     } catch (e) {
       this.connecting = false
 
-
       if (String((e as any).message).includes('password provided is not valid')) {
-        console.log('st')
         this.loginForm.controls['password'].setErrors({
           invalid: true,
           message: (e as any).message
