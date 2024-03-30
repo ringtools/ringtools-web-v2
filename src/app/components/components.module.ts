@@ -7,7 +7,7 @@ import { VisualComponent } from './visual/visual.component';
 import { SharedModule } from '../shared/shared.module';
 import { PartialsModule } from '../partials/partials.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgbButtonsModule } from '@ng-bootstrap/ng-bootstrap';
+//import { NgbButtonsModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserModule } from '@angular/platform-browser';
 import { RingOnlyComponent } from './ring-only/ring-only.component';
 import { DonationComponent } from './donation/donation.component';
