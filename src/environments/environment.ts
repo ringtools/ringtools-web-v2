@@ -6,7 +6,7 @@
 export const environment = {
   production: false,
   networkClass: null,
-  apiEndpoint: process.env["API_ENDPOINT"] || ''
+  apiEndpoint: 'https://rof.tools'
 };
 
 /*

@@ -2,9 +2,9 @@
 
 /* Importing Bootstrap SCSS file. */
 @import 'style/dark.scss';
-@import '~bootstrap/scss/bootstrap';
+@import 'node_modules/bootstrap/scss/bootstrap';
 @import 'style/bootswatch.scss';
-@import '~bootstrap-icons/font/bootstrap-icons.scss';
+@import 'node_modules/bootstrap-icons/font/bootstrap-icons.scss';
 
 /* Dragula Drag & Drop */
 @import 'style/dragula.scss';
