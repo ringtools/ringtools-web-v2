@@ -13,3 +13,7 @@
 .ng-invalid {
   @extend .is-invalid;
 }
+
+.form-floating > label {
+  color: #444 !important;
+}
