@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { setViewMode } from 'src/app/actions/setting.actions';
@@ -19,8 +19,8 @@ export class VisualComponent {
   nodeOwners$!: Observable<NodeOwner[]>;
   settings!: SettingState;
 
-  viewMode = new FormGroup({
-    viewMode: new FormControl(''),
+  viewMode = new UntypedFormGroup({
+    viewMode: new UntypedFormControl(''),
   });
 
   constructor(

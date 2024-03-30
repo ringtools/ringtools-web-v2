@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { LnDataService } from 'src/app/services/ln-data.service';
@@ -13,9 +13,9 @@ export class DonationComponent {
   lnInvoice!: string;
   expiry!: number;
 
-  donateForm = new FormGroup({
-    amountSats: new FormControl(''),
-    message: new FormControl(''),
+  donateForm = new UntypedFormGroup({
+    amountSats: new UntypedFormControl(''),
+    message: new UntypedFormControl(''),
   });
   buttonEnabled: boolean = true;
 

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -51,14 +51,14 @@ export class SettingsComponent implements OnInit {
 
   settings!: SettingState;
 
-  ringForm = new FormGroup({
-    name: new FormControl(''),
-    size: new FormControl(''),
+  ringForm = new UntypedFormGroup({
+    name: new UntypedFormControl(''),
+    size: new UntypedFormControl(''),
   });
 
-  nodeForm = new FormGroup({
-    pubKey: new FormControl(''),
-    tgUsername: new FormControl(''),
+  nodeForm = new UntypedFormGroup({
+    pubKey: new UntypedFormControl(''),
+    tgUsername: new UntypedFormControl(''),
   });
 
   pubkeysText: string = '';

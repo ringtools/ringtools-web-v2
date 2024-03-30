@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable, Subscriber, Subscription } from 'rxjs';
 import * as svg from 'save-svg-as-png';
@@ -28,8 +28,8 @@ export class OverviewComponent implements OnDestroy {
   ring: IRing = [];
   nodeData: Map<string, NodeInfo> = new Map<string, NodeInfo>();
   sub: Subscription = new Subscription();
-  viewModeForm = new FormGroup({
-    viewMode: new FormControl(''),
+  viewModeForm = new UntypedFormGroup({
+    viewMode: new UntypedFormControl(''),
   });
   
   constructor(
